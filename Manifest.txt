@@ -3,9 +3,13 @@ Manifest.txt
 PostInstall.txt
 README.rdoc
 Rakefile
-lib/guilded_base.rb
+lib/guilded.rb
+lib/guilded/base.rb
+lib/guilded/guilder.rb
 script/console
 script/destroy
 script/generate
-test/test_guilded_base.rb
-test/test_helper.rb
+spec/guilded_spec.rb
+spec/spec.opts
+spec/spec_helper.rb
+tasks/rspec.rake

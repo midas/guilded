@@ -1,10 +1,10 @@
 %w[rubygems rake rake/clean fileutils newgem rubigen].each { |f| require f }
-require File.dirname(__FILE__) + '/lib/guilded_base'
+require File.dirname(__FILE__) + '/lib/guilded'
 
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.new('guilded-base', GuildedBase::VERSION) do |p|
-  p.developer('midas', 'jason@lookforwardenterprises.com')
+$hoe = Hoe.new('guilded', Guilded::VERSION) do |p|
+  p.developer('midas', 'jaosn@lookforwardenterprisescom')
   p.changes              = p.paragraphs_of("History.txt", 0..1).join("\n\n")
   p.post_install_message = 'PostInstall.txt' # TODO remove if post-install message not required
   p.rubyforge_name       = p.name # TODO this is default value
