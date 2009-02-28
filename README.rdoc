@@ -1,5 +1,6 @@
 = guilded-base
 
+* Warning: This project just started and there are no releases available yet.
 
 == DESCRIPTION:
 
@@ -13,7 +14,9 @@ and accessibility.  Guilded will achieve these goals by applying each technology
 
 XHTML will be employed for content.  CSS used for layout and styling.  Behavior will be added to a component with JavaScript 
 through progressive enhancement.  The user will have the best experience with a Guilded component when CSS and JavaScript are 
-enabled in their browser, but will still be able to use the component when CSS and JavaSCript are disabled. 
+enabled in their browser, but will still be able to use the component when CSS and JavaScript are disabled. 
+
+Guilded also seeks to provide a standardized CSS framework for creating layouts that are reusable and predictable.
 
 Guilded will utilize the currently existing RubyGems system to package its components.  A new Guilded component will be packaged 
 in a Gem and have a dependency on the guilded-base gem.
