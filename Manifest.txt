@@ -3,9 +3,9 @@ Manifest.txt
 PostInstall.txt
 README.rdoc
 Rakefile
-lib/guilded-base.rb
+lib/guilded_base.rb
 script/console
 script/destroy
 script/generate
-test/test_guilded-base.rb
+test/test_guilded_base.rb
 test/test_helper.rb

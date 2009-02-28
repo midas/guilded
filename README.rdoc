@@ -2,7 +2,7 @@
 
 * Warning: This project just started and there are no releases available yet.
 
-== DESCRIPTION:
+== DESCRIPTION
 
 Guilded is a framework for building web based components centered around current web standards and best practices. The current 
 framework is written in ruby, but could be ported to other languages.
@@ -17,7 +17,7 @@ through progressive enhancement.  The user will have the best experience with a 
 enabled in their browser, but will still be able to use the component when CSS and JavaScript are disabled. 
 
 Guilded will use jQuery as it's base JavaScript framework.  jQuery was chosen because it lends itself to progressive enhancement
-due to the way it was authored.  in addition, the tight integration of jQuery's selectors with CSS selectors is also highly 
+due to the way it was authored.  In addition, the tight integration of jQuery's selectors with CSS selectors is also highly 
 desirable.  When authoring a Guilded component, it is encouraged to write the behavior code as a jQuery plugin.  This will 
 allow the jQuery plugin to be used outside of the Guilded project, if desired.
 
@@ -29,20 +29,22 @@ in a Gem and have a dependency on the guilded-base gem.
 The Guilded-Base gem contains the framework to build Guilded components.
 
 
-== FEATURES/PROBLEMS:
+== FEATURES
+
+
+== PROBLEMS
 
 
 
-
-== REQUIREMENTS:
-
-
-
-== INSTALL:
+== REQUIREMENTS
 
 
 
-== LICENSE:
+== INSTALL
+
+
+
+== LICENSE
 
 Copyright (c) 2009 C. Jason Harrelson
 
