@@ -4,29 +4,27 @@
 
 == DESCRIPTION:
 
-FIX (describe your package)
+Guilded is a framework for building web based components centered around current web standards and best practices. The current 
+framework is written in ruby, but can be ported to other languages.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
 
-== SYNOPSIS:
 
-  FIX (code sample of usage)
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2009 FIXME full name
+Copyright (c) 2009 C. Jason Harrelson
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
