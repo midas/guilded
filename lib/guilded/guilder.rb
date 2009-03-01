@@ -10,22 +10,20 @@ module Guilded
     # The folder name for guilded css files.  Must include trailing '/'.
     GUILDED_CSS_FOLDER = "guilded/"
     GUILDED_NS = "guilded."
-  
-    attr_reader :combined_js_srcs, :combined_css_srcs
+
+    attr_reader :combined_js_srcs, :combined_css_srcs, :initialized_at
     
     def initialize( options={} ) #:nodoc:
+      @initialized_at = Time.now
       @env = options[:env].to_sym if options[:env]
       @env ||= :production
       @g_elements = Hash.new #unless @g_elements
       @combined_js_srcs = Array.new #if @combined_js_srcs.nil?
       @combined_css_srcs = Array.new #if @combined_css_srcs.nil?
-    
+      @assets_combined = false
       # Make sure that the css reset file is first so that other files can override the reset,
       # unless the user specified no reset to be included.
       init_sources
-      # @combined_css_srcs << Guilded::Base::RESET_CSS unless options[:reset] == false
-      #       @combined_js_srcs << Guilded::Base::GUILDED_JS << Guilded::Base::JQUERY_JS
-      #TODO find a way to get the resolve js libs to work on these two so we get the non-min version in development
     end
   
     # Adds an element with its options to the @g_elements hash to be used later.
@@ -34,6 +32,10 @@ module Guilded
       raise Guilded::Exceptions::IdMissing unless options.has_key?( :id )
       raise Guilded::Exceptions::DuplicateElementId( options[:id] ) if @g_elements.has_key?( options[:id] )
       @g_elements[ options[:id] ] = Guilded::ComponentDef.new( element, options, libs, styles )
+    end
+  
+    def count
+      @g_elements.size
     end
     
     # Clears out all but the reset CSS and the base JavaScripts
@@ -45,45 +47,19 @@ module Guilded
     end
 
     # Generates the markup required to include all the assets necessary for the Guilded compoents in 
-    # @g_elements collection.
+    # @g_elements collection.  Use this if you are not interested in caching asset files.
     #
     def apply
       to_init = ""
-      
-      generate_asset_lists
-      # @g_elements.each_value do |defi|
-      #         #TODO get stylesheet (skin) stuff using rails caching
-      #         combine_css_sources( defi.kind, defi.options[:skin], defi.styles ) unless defi.exclude_css?
-      # 
-      #         # Combine all JavaScript sources so that the caching option can be used on
-      #         # the javascript_incldue_tag helper.
-      #         combine_js_sources( defi.kind, defi.libs ) unless defi.exclude_js?
-      #       end
-
-      # # Add default styles
-      #       Guilded::Base::COMMON_CSS.each do |style|
-      #         @combined_css_srcs.push( style ) unless @combined_css_srcs.include?( style )
-      #       end
-      # 
-      #       # Add default JavaScripts
-      #       Guilded::Base::COMMON_JS.each do |script|
-      #         @combined_js_srcs.push( script ) unless @combined_js_srcs.include?( script )
-      #       end
-
-      to_init << stylesheet_link_tag( @combined_css_srcs, :cache => "cache/#{generate_css_cache_name( @combined_css_srcs )}" )
-      to_init << javascript_include_tag( @combined_js_srcs, :cache => "cache/#{generate_js_cache_name( @combined_js_srcs )}" )
-
-      # to_init << "<script type=\"text/javascript\">"
-      #       to_init << "var initGuildedElements = function(){"
-      # 
-      #       @g_elements.each_value do |guilded_def| 
-      #         to_init << " g.#{guilded_def.kind.to_s.camelize( :lower )}Init( #{guilded_def.options.to_json} );" unless guilded_def.exclude_js?
-      #       end
-      # 
-      #       to_init << "}; jQuery('document').ready( initGuildedElements );</script>"
+      generate_asset_lists unless @assets_combined
+      @combined_css_srcs.each { |css| to_init << "<link href=\"/stylesheets/#{css}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />" }
+      @combined_js_srcs.each { |js| to_init << "<script type=\"text/javascript\" src=\"/javascripts/#{js}\"></script>" }
       to_init << generate_javascript_init
     end
     
+    # Writes an initialization method that calls each Guilded components initialization method.  This 
+    # method will exceute on document load finish.
+    #
     def generate_javascript_init
       code = "<script type=\"text/javascript\">"
       code << "var initGuildedElements = function(){"
@@ -93,7 +69,16 @@ module Guilded
       to_init << "};jQuery('document').ready( initGuildedElements );</script>"
     end
     
+    def js_cache_name
+      generate_js_cache_name( @combined_js_srcs )
+    end
+    
+    def css_cache_name
+      generate_css_cache_name( @combined_css_srcs )
+    end
+    
     def generate_js_cache_name( sources )      
+      generate_asset_lists unless @assets_combined
       #return"#{controller.class.to_s.underscore}_#{controller.action_name}" if development?
       sorted_srcs = sources.sort
       stripped_srcs = sorted_srcs.map { |src| src.gsub( /.js/, '' ).gsub( /\//, '_') }
@@ -102,6 +87,7 @@ module Guilded
     end
     
     def generate_css_cache_name( sources )
+      generate_asset_lists unless @assets_combined
       #return "#{controller.class.to_s.underscore}_#{controller.action_name}" if development?
       sorted_srcs = sources.sort
       stripped_srcs = sorted_srcs.map { |src| src.gsub( /.css/, '' ).gsub( /\//, '_') }
@@ -111,8 +97,11 @@ module Guilded
     
   protected
     
+    # Adds the Guilded reset CSS file and the guilded.js and jQuery files to the respective sources
+    # collections.
+    #
     def init_sources
-      @combined_css_srcs << Guilded::Base::RESET_CSS unless options[:reset] == false
+      @combined_css_srcs << Guilded::Base::RESET_CSS #unless options[:reset] == false
       @combined_js_srcs << Guilded::Base::GUILDED_JS << Guilded::Base::JQUERY_JS
     end
     
@@ -120,6 +109,7 @@ module Guilded
     # the current page.
     #
     def generate_asset_lists
+      @assets_combined = true
       @g_elements.each_value do |defi|
         #TODO get stylesheet (skin) stuff using rails caching
         combine_css_sources( defi.kind, defi.options[:skin], defi.styles ) unless defi.exclude_css?
@@ -179,7 +169,9 @@ module Guilded
       sources.map { |source| add_guilded_js_path( source ) }
     end
     
-    # Adds the guilded JS path to the
+    # Adds the guilded JS path to the the source name passed in.  When not in development mode,
+    # it looks for a .pack.js, .min.jsm .compressed.js and chooses one of these over the 
+    # development version.
     #
     def add_guilded_js_path( source )
       part = "#{GUILDED_JS_FOLDER}#{GUILDED_NS}#{source.to_s}"
