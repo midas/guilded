@@ -38,11 +38,24 @@ module Guilded
       @g_elements.size
     end
     
+    def component_count
+      count
+    end
+    
+    def style_count
+      @combined_css_srcs.size
+    end
+    
+    def script_count
+      @combined_js_srcs.size
+    end
+    
     # Clears out all but the reset CSS and the base JavaScripts
     #
     def reset!
       @combined_css_srcs.clear
       @combined_js_srcs.clear
+      @g_elements.clear
       init_sources
     end
 

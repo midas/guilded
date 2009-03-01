@@ -1,8 +1,10 @@
 = guilded-base
 
-* Warning: This project just started and there are no releases available yet.
+* http://github.com/midas/guilded-base/tree/master
 
 == DESCRIPTION
+
+Warning: This project just started and there are no releases available yet.
 
 Guilded is a framework for building web based components centered around current web standards and best practices. The current 
 framework is written in ruby, but could be ported to other languages.
