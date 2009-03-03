@@ -44,7 +44,9 @@ The Guilded-Base gem contains the framework to build Guilded components.
 
 == INSTALL
 
+gem sources -a http://gems.github.com
 
+sudo gem install midas-guilded
 
 == LICENSE
 
