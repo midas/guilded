@@ -6,16 +6,21 @@ module Guilded
     include Singleton
     
     # The folder name for guilded JavaScript files.  Must include trailing '/'.
-    GUILDED_JS_FOLDER = "guilded/"
+    #GUILDED_JS_FOLDER = ""
     # The folder name for guilded css files.  Must include trailing '/'.
-    GUILDED_CSS_FOLDER = "guilded/"
+    #GUILDED_CSS_FOLDER = "guilded/"
     GUILDED_NS = "guilded."
-    JS_PATH = "#{RAILS_ROOT}/public/javascripts/"
-    CSS_PATH = "#{RAILS_ROOT}/public/stylesheets/"
-
-    attr_reader :combined_js_srcs, :combined_css_srcs, :initialized_at
+    # JS_PATH = GUILDED_CONFIG[:js_path] if defined?( GUILDED_CONFIG )
+    # CSS_PATH = GUILDED_CONFIG[:css_path] if defined?( GUILDED_CONFIG )
+      
+    attr_reader :initialized_at
     
     def initialize( options={} ) #:nodoc:
+      if defined?( GUILDED_CONFIG )
+        configure_guilded
+      else
+        raise Guilded::Exceptions::MissingConfiguration
+      end
       @initialized_at = Time.now
       @env = options[:env].to_sym if options[:env]
       @env ||= :production
@@ -52,12 +57,23 @@ module Guilded
       @combined_js_srcs.size
     end
     
+    def combined_js_srcs
+      generate_asset_lists unless @assets_combined
+      @combined_js_srcs
+    end
+    
+    def combined_css_srcs
+      generate_asset_lists unless @assets_combined
+      @combined_css_srcs
+    end
+    
     # Clears out all but the reset CSS and the base JavaScripts
     #
     def reset!
       @combined_css_srcs.clear
       @combined_js_srcs.clear
       @g_elements.clear
+      @assets_combined = false
       init_sources
     end
 
@@ -113,12 +129,29 @@ module Guilded
     
   protected
     
+    def configure_guilded
+      @js_path = GUILDED_CONFIG[:js_path]
+      @js_folder = GUILDED_CONFIG[:js_folder]
+      @jquery_js = GUILDED_CONFIG[:jquery_js]
+      @guilded_js = 'guilded.min.js' 
+      @css_path = GUILDED_CONFIG[:css_path]
+      @css_folder = GUILDED_CONFIG[:css_folder]
+      @reset_css = GUILDED_CONFIG[:reset_css]
+      @js_path.freeze
+      @css_path.freeze
+      @js_folder.freeze
+      @jquery_js.freeze
+      @guilded_js.freeze
+      @css_folder.freeze
+      @reset_css.freeze
+    end
+    
     # Adds the Guilded reset CSS file and the guilded.js and jQuery files to the respective sources
     # collections.
     #
     def init_sources
-      @combined_css_srcs << Guilded::Base::RESET_CSS #unless options[:reset] == false
-      @combined_js_srcs << Guilded::Base::GUILDED_JS << Guilded::Base::JQUERY_JS
+      @combined_css_srcs << "#{@reset_css}" unless @reset_css.nil? || @reset_css.empty?
+      @combined_js_srcs << "#{@jquery_js}" << "#{@js_folder}#{@guilded_js}"
     end
     
     # Combines all JavaScript and CSS files into lists to include based on what Guilded components are on 
@@ -190,17 +223,16 @@ module Guilded
     # development version.
     #
     def add_guilded_js_path( source )
-      part = "#{GUILDED_JS_FOLDER}#{GUILDED_NS}#{source.to_s}"
+      part = "#{@js_folder}#{GUILDED_NS}#{source.to_s}"
       ext = 'js'
       
       return "#{part}.#{ext}" if development?
  
-      #TODO Get rid of Rails specific code.
       possibles = {
-        "#{JS_PATH}#{part}.pack.#{ext}" => "#{part}.pack.#{ext}",
-        "#{JS_PATH}#{part}.min.#{ext}" => "#{part}.min.#{ext}",
-        "#{JS_PATH}#{part}.compressed.#{ext}" => "#{part}.compressed.#{ext}",
-        "#{JS_PATH}#{part}.#{ext}" => "#{part}.#{ext}"
+        "#{@js_path}#{part}.pack.#{ext}" => "#{part}.pack.#{ext}",
+        "#{@js_path}#{part}.min.#{ext}" => "#{part}.min.#{ext}",
+        "#{@js_path}#{part}.compressed.#{ext}" => "#{part}.compressed.#{ext}",
+        "#{@js_path}#{part}.#{ext}" => "#{part}.#{ext}"
       }
       
       possibles.each do |full_path, part_path|
@@ -227,8 +259,8 @@ module Guilded
     
     def add_guilded_css_path( source, skin )
       skin = 'default' if skin.nil? || skin.empty?
-      part = "#{GUILDED_CSS_FOLDER}#{source.to_s}/#{skin}.css"
-      path = "#{CSS_PATH}#{part}"
+      part = "#{@css_folder}#{source.to_s}/#{skin}.css"
+      path = "#{@css_path}#{part}"
       File.exists?( path ) ? part : ''
     end
     

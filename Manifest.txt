@@ -4,7 +4,6 @@ PostInstall.txt
 README.rdoc
 Rakefile
 lib/guilded.rb
-lib/guilded/base.rb
 lib/guilded/component_def.rb
 lib/guilded/exceptions.rb
 lib/guilded/guilder.rb

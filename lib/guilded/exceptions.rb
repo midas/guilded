@@ -19,5 +19,11 @@ module Guilded
       end
     end
     
+    class MissingConfiguration < GuildedException
+      def initialize    #:nodoc:
+        @msg = "There is no GUILDED_CONFIG instance.  Please load Guilded configuration with your apps initialization."
+      end
+    end
+    
   end
 end
