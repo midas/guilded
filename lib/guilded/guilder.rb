@@ -10,6 +10,8 @@ module Guilded
     # The folder name for guilded css files.  Must include trailing '/'.
     GUILDED_CSS_FOLDER = "guilded/"
     GUILDED_NS = "guilded."
+    JS_PATH = "#{RAILS_ROOT}/public/javascripts/"
+    CSS_PATH = "#{RAILS_ROOT}/public/stylesheets/"
 
     attr_reader :combined_js_srcs, :combined_css_srcs, :initialized_at
     
@@ -17,9 +19,9 @@ module Guilded
       @initialized_at = Time.now
       @env = options[:env].to_sym if options[:env]
       @env ||= :production
-      @g_elements = Hash.new #unless @g_elements
-      @combined_js_srcs = Array.new #if @combined_js_srcs.nil?
-      @combined_css_srcs = Array.new #if @combined_css_srcs.nil?
+      @g_elements = Hash.new
+      @combined_js_srcs = Array.new
+      @combined_css_srcs = Array.new
       @assets_combined = false
       # Make sure that the css reset file is first so that other files can override the reset,
       # unless the user specified no reset to be included.
@@ -193,18 +195,19 @@ module Guilded
       
       return "#{part}.#{ext}" if development?
  
+      #TODO Get rid of Rails specific code.
       possibles = {
-        "#{RAILS_ROOT}/public/javascripts/#{part}.pack.#{ext}" => "#{part}.pack.#{ext}",
-        "#{RAILS_ROOT}/public/javascripts/#{part}.min.#{ext}" => "#{part}.min.#{ext}",
-        "#{RAILS_ROOT}/public/javascripts/#{part}.compressed.#{ext}" => "#{part}.compressed.#{ext}",
-        "#{RAILS_ROOT}/public/javascripts/#{part}.#{ext}" => "#{part}.#{ext}"
+        "#{JS_PATH}#{part}.pack.#{ext}" => "#{part}.pack.#{ext}",
+        "#{JS_PATH}#{part}.min.#{ext}" => "#{part}.min.#{ext}",
+        "#{JS_PATH}#{part}.compressed.#{ext}" => "#{part}.compressed.#{ext}",
+        "#{JS_PATH}#{part}.#{ext}" => "#{part}.#{ext}"
       }
       
       possibles.each do |full_path, part_path|
         return part_path if File.exists?( full_path )           
       end
       
-      "#{part}.#{ext}"
+      "" # Should never reach here
     end
     
     def combine_css_sources( component, skin, styles=[] )  #:doc:
@@ -225,7 +228,7 @@ module Guilded
     def add_guilded_css_path( source, skin )
       skin = 'default' if skin.nil? || skin.empty?
       part = "#{GUILDED_CSS_FOLDER}#{source.to_s}/#{skin}.css"
-      path = "#{RAILS_ROOT}/public/stylesheets/#{part}"
+      path = "#{CSS_PATH}#{part}"
       File.exists?( path ) ? part : ''
     end
     
