@@ -15,6 +15,8 @@ module Guilded
         html = stylesheet_link_tag( g.combined_css_srcs, :cache => "cache/#{g.css_cache_name}" )
         html << javascript_include_tag( g.combined_js_srcs, :cache => "cache/#{g.js_cache_name}" )
         html << g.generate_javascript_init
+        g.reset!
+        html
       end
       
     end

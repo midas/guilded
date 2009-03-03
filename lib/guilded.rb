@@ -10,3 +10,5 @@ require 'guilded/rails/view_helpers'
 module Guilded
   VERSION = '0.0.1'
 end
+
+ActionView::Base.send( :include, Guilded::Rails::ViewHelpers ) if defined?( ActionView )

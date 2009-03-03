@@ -68,6 +68,7 @@ module Guilded
       @combined_css_srcs.each { |css| to_init << "<link href=\"/stylesheets/#{css}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />" }
       @combined_js_srcs.each { |js| to_init << "<script type=\"text/javascript\" src=\"/javascripts/#{js}\"></script>" }
       to_init << generate_javascript_init
+      reset!
     end
     
     # Writes an initialization method that calls each Guilded components initialization method.  This 
@@ -77,9 +78,9 @@ module Guilded
       code = "<script type=\"text/javascript\">"
       code << "var initGuildedElements = function(){"
       @g_elements.each_value do |guilded_def| 
-        to_init << "g.#{guilded_def.kind.to_s.camelize( :lower )}Init( #{guilded_def.options.to_json} );" unless guilded_def.exclude_js?
+        code << "g.#{guilded_def.kind.to_s.camelize( :lower )}Init( #{guilded_def.options.to_json} );" unless guilded_def.exclude_js?
       end
-      to_init << "};jQuery('document').ready( initGuildedElements );</script>"
+      code << "};jQuery('document').ready( initGuildedElements );</script>"
     end
     
     def js_cache_name
@@ -202,6 +203,8 @@ module Guilded
       possibles.each do |full_path, part_path|
         return part_path if File.exists?( full_path )           
       end
+      
+      "#{part}.#{ext}"
     end
     
     def combine_css_sources( component, skin, styles=[] )  #:doc:

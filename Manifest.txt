@@ -3,7 +3,6 @@ Manifest.txt
 PostInstall.txt
 README.rdoc
 Rakefile
-init.rb
 lib/guilded.rb
 lib/guilded/base.rb
 lib/guilded/component_def.rb
