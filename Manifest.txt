@@ -3,12 +3,15 @@ Manifest.txt
 PostInstall.txt
 README.rdoc
 Rakefile
+guilded.gemspec
 lib/guilded.rb
 lib/guilded/component_def.rb
 lib/guilded/exceptions.rb
 lib/guilded/guilder.rb
 lib/guilded/rails.rb
 lib/guilded/rails/view_helpers.rb
+rails_generators/guilded_config/guilded_config_generator.rb
+rails_generators/guilded_config/templates/load_guilded_settings.rb
 script/console
 script/destroy
 script/generate
