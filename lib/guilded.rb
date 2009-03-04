@@ -7,7 +7,7 @@ require 'guilded/exceptions'
 require 'guilded/rails/view_helpers'
 
 module Guilded
-  VERSION = '0.0.3'
+  VERSION = '0.0.4'
 end
 
 ActionView::Base.send( :include, Guilded::Rails::ViewHelpers ) if defined?( ActionView )

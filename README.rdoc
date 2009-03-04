@@ -40,6 +40,7 @@ The Guilded-Base gem contains the framework to build Guilded components.
 
 == REQUIREMENTS
 
+jQuery
 
 
 == INSTALL
@@ -47,6 +48,28 @@ The Guilded-Base gem contains the framework to build Guilded components.
 gem sources -a http://gems.github.com
 
 sudo gem install midas-guilded
+
+
+== INSTALL FOR RAILS
+
+Add to environment file:
+
+	config.gem "guilded", :version => '0.0.3'
+
+Run:
+
+	sudo rake:gems:install
+	
+Generate:
+
+	script/generate guilded_config
+	script/generate guilded_assets
+
+
+Edit the settings file at config/initializers/load_guilded_settings.rb.  Change any of these settings to reflect how
+you would like Guilded to be configured.  If you change where any file(s) are configured to be located, then also move 
+the respective file(s).
+
 
 == LICENSE
 
