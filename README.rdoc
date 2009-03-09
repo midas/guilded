@@ -33,7 +33,7 @@ The Guilded-Base gem contains the framework to build Guilded components.
 
 == FEATURES
 
-1 Centralized control of CSS and JavaScript assets needed to render a web page.
+1. Centralized control of CSS and JavaScript assets needed to render a web page.
   * Automatic addition of jQuery 1.3.2 library.
   * Automatic addition of Yahoo's reset-min.css.
   * Redefinition of jQuery's $ method to $j and running jQuery in no conflict mode to allow other libraries to retain control 
@@ -49,9 +49,9 @@ The Guilded-Base gem contains the framework to build Guilded components.
   * For JavaScript assets, Guilded loops through the collection of JavaScript assets creating an HTML script tag for each, or a
     single script tag for the cached version of these asset(s), when running in production mode.
 
-2 Caching of CSS and JavaScript assets needed to render a web page.
+2. Caching of CSS and JavaScript assets needed to render a web page.
 
-3 Automatic choosing of packed, compressed or minified JavaScript files when in production mode.
+3. Automatic choosing of packed, compressed or minified JavaScript files when in production mode.
 
 
 == PROBLEMS
