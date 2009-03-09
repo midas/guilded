@@ -33,23 +33,23 @@ The Guilded-Base gem contains the framework to build Guilded components.
 
 == FEATURES
 
-1. Centralized control of CSS and JavaScript assets needed to render a web page.
+= Centralized control of CSS and JavaScript assets needed to render a web page.
 * Automatic addition of jQuery 1.3.2 library.
 * Automatic addition of Yahoo's reset-min.css.
-  * Redefinition of jQuery's $ method to $j and running jQuery in no conflict mode to allow other libraries to retain control 
-    of the $ method.
-  * Definition of the g namespace to avoid JavaScript name collisions.
-  * Definition of convenience method $jc().  Equivalent to jQuery( '.' + className ).
-  * Definition of convenience method $jid().  Equivalent to jQuery( '#' + idName ). 
-  * The assets required for each component are added by the author to a central data store.  When the view helper to create
-    the component is called, these assets are added to the asset store.  This results in a single method call with some options
-    to use a Guilded component.
-  * For CSS assets, Guilded simply loops through the collection of CSS assets creating an HTML link tag for each asset, or one 
-    HTML link tag for the cached version of these asset(s), when running in production mode.
-  * For JavaScript assets, Guilded loops through the collection of JavaScript assets creating an HTML script tag for each, or a
-    single script tag for the cached version of these asset(s), when running in production mode.
-2. Caching of CSS and JavaScript assets needed to render a web page.
-3. Automatic choosing of packed, compressed or minified JavaScript files when in production mode.
+* Redefinition of jQuery's $ method to $j and running jQuery in no conflict mode to allow other libraries to retain control 
+  of the $ method.
+* Definition of the g namespace to avoid JavaScript name collisions.
+* Definition of convenience method $jc().  Equivalent to jQuery( '.' + className ).
+* Definition of convenience method $jid().  Equivalent to jQuery( '#' + idName ). 
+* The assets required for each component are added by the author to a central data store.  When the view helper to create
+  the component is called, these assets are added to the asset store.  This results in a single method call with some options
+  to use a Guilded component.
+* For CSS assets, Guilded simply loops through the collection of CSS assets creating an HTML link tag for each asset, or one 
+  HTML link tag for the cached version of these asset(s), when running in production mode.
+* For JavaScript assets, Guilded loops through the collection of JavaScript assets creating an HTML script tag for each, or a
+  single script tag for the cached version of these asset(s), when running in production mode.
+= Caching of CSS and JavaScript assets needed to render a web page.
+= Automatic choosing of packed, compressed or minified JavaScript files when in production mode.
 
 
 == PROBLEMS
