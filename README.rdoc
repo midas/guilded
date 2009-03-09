@@ -50,16 +50,15 @@ The Guilded-Base gem contains the framework to build Guilded components.
   single script tag for the cached version of these asset(s), when running in production mode.
 
 === Caching of CSS and JavaScript assets needed to render a web page.
-* The CSS assets are cached to form one file.  In addition, the JAvaScript assets are cached to form one file.  These files are 
-  named by sorting and concatenating into a single string the names of each individual respective asset.  This string is then 
-  hashed to generate a reproduceable unique string.  This file naming technique allows Guilded to find cached asset files that 
+* The CSS assets are cached to form one file.  In addition, the JavaScript assets are cached to form one file.  These files are 
+  named by sorting and concatenating into a single string the names of each individual respective asset.  This string is then hashed 
+  to generate a reproducable unique string.  This file naming technique allows Guilded to find cached asset files that 
   match a combination of Guilded components, not an action, URI, etc.  Thus, one file for a certain combination of Guilded 
   components is generated and then reused on any page where the combination appears.
 
 === Automatic choosing of packed, compressed or minified JavaScript files when in production mode.
 * In production mode, Guilded automatically looks for a .pack, .compressed or .min version of the JavaScript assets.  If one of 
-  these is found, it includes it, otherwise, it includes the version specified by the author in the view helper.  This is usually 
-  an unpacked version of the file.
+  these is found, it includes it, otherwise, it includes the version specified by the author in the view helper.  This is usually an unpacked version of the file.
 
 == PROBLEMS
 
