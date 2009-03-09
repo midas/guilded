@@ -58,7 +58,7 @@ The Guilded-Base gem contains the framework to build Guilded components.
 
 === Automatic choosing of packed, compressed or minified JavaScript files when in production mode.
 * In production mode, Guilded automatically looks for a .pack, .compressed or .min version of the JavaScript assets.  If one of 
-  these is found, it includes it, otherwise, it includes the version specified by the author in the view helper.  This is usually
+  these is found, it includes it, otherwise, it includes the version specified by the author in the view helper.  This is usually 
   an unpacked version of the file.
 
 == PROBLEMS
