@@ -1,6 +1,6 @@
 = guilded-base
 
-* http://github.com/midas/guilded-base/tree/master
+http://github.com/midas/guilded-base/tree/master
 
 == DESCRIPTION
 
