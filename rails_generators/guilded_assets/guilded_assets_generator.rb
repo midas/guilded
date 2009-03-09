@@ -7,6 +7,7 @@ class GuildedAssetsGenerator < Rails::Generator::Base
     record do |m|
       m.file "guilded.js", "public/javascripts/guilded.js"
       m.file "guilded.min.js", "public/javascripts/guilded.min.js"
+      m.directory "public/javascripts/jquery"
       m.file "jquery-1.2.6.js", "public/javascripts/jquery/jquery-1.2.6.js"
       m.file "jquery-1.2.6.min.js", "public/javascripts/jquery/jquery-1.2.6.min.js"
       m.file "jquery-1.3.2.js", "public/javascripts/jquery/jquery-1.3.2.js"
