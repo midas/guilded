@@ -1,5 +1,6 @@
 require 'digest'
 require 'singleton'
+require 'guilded/exceptions'
 
 module Guilded
   
@@ -25,7 +26,7 @@ module Guilded
       
     attr_reader :initialized_at
     
-    def initialize( options={} ) #:nodoc:
+    def initialize #:nodoc:
       if defined?( GUILDED_CONFIG )
         configure_guilded
       else
@@ -178,7 +179,8 @@ module Guilded
     #
     def init_sources #:nodoc: 
       @combined_css_srcs << "#{@reset_css}" unless @reset_css.nil? || @reset_css.empty?
-      @combined_js_srcs << "#{@jquery_js}" << "#{@js_folder}#{@guilded_js}"
+      #@combined_js_srcs << "#{@jquery_js}" << "#{@js_folder}#{@guilded_js}"
+      resolve_js_libs( "#{@jquery_js}", "#{@js_folder}#{@guilded_js}" )
     end
     
     # Combines all JavaScript and CSS files into lists to include based on what Guilded components are on 
@@ -207,7 +209,7 @@ module Guilded
     #   a jQuery plugin, etc.
     #
     def combine_js_sources( component, libs=[] )  #:nodoc:
-      resolve_js_libs( libs )
+      resolve_js_libs( *libs )
       
       comp_src = add_guilded_js_path( component )
       @combined_js_srcs.push( comp_src ) unless @combined_js_srcs.include?( comp_src )
@@ -219,7 +221,7 @@ module Guilded
     # parts fo the name to try and get the debug version of the library.  If it cannot 
     # find the debug version of the file, it will just remain  what was initially provded.
     #
-    def resolve_js_libs( libs ) #:nodoc: 
+    def resolve_js_libs( *libs ) #:nodoc: 
       if development?
         # Try to use an unpacked or unminimized version
         libs.each do |lib|
@@ -253,19 +255,14 @@ module Guilded
       part = "#{@js_folder}#{GUILDED_NS}#{source.to_s}"
       ext = 'js'
       
-      return "#{part}.#{ext}" if development?
+      return "#{part}.#{ext}" unless production?
  
-      #TODO: switch this to take min, pack or compressed out if in development mode for efficiency in production
- 
-      possibles = {
-        "#{@js_path}#{part}.pack.#{ext}" => "#{part}.pack.#{ext}",
-        "#{@js_path}#{part}.min.#{ext}" => "#{part}.min.#{ext}",
-        "#{@js_path}#{part}.compressed.#{ext}" => "#{part}.compressed.#{ext}",
-        "#{@js_path}#{part}.#{ext}" => "#{part}.#{ext}"
-      }
+      possibles = [ "#{@js_path}#{part}.min.#{ext}", "#{@js_path}#{part}.pack.#{ext}", "#{@js_path}#{part}.compressed.#{ext}",
+        "#{@js_path}#{part}.#{ext}" ]
+      parts = [ "#{part}.min.#{ext}", "{part}.pack.#{ext}", "#{part}.compressed.#{ext}", "#{part}.#{ext}" ]
       
-      possibles.each do |full_path, part_path|
-        return part_path if File.exists?( full_path )           
+      possibles.each_with_index do |full_path, i|
+        return parts[i] if File.exists?( full_path )  
       end
       
       "" # Should never reach here
