@@ -2,16 +2,26 @@ require 'digest'
 require 'singleton'
 
 module Guilded
+  
+  # Guilder is the worker for the entire Guilded framework.  It collects all of the necessary components for a page
+  # through its add() method.  When the g_apply_behavior() method is called at the end of a page, the Guilder writes
+  # HTML to include all of the necessary asset files (caching them in production).  It also writes s JavaScript initialization
+  # function and fires the initialization function on page load.  
+  #
+  # This initialization function calls the initialization function for each Guilded component that was added to the current 
+  # page.  For example, if a Guilded component named 'g_load_alerter' was added to a page, the Guilder would include this line 
+  # in the initialization function it writes: g.initLoadAlerter( /* passing options hash here */ );  The g before the function
+  # is a JavaScript namespace that Guilded automatically creates to facilitate avoiding name collisions with other JavaScript 
+  # libraries and code.
+  #
+  # Th options hash that is passed to the init functions for each Guilded component is simply the options hash from the 
+  # component's view helper.  The Guilder calls .to_json() on the options hash.  Thus, if there are pairs in the options hash
+  # that need not go to the JavaScript init method they should be removed within the view helper. 
+  #
   class Guilder
     include Singleton
     
-    # The folder name for guilded JavaScript files.  Must include trailing '/'.
-    #GUILDED_JS_FOLDER = ""
-    # The folder name for guilded css files.  Must include trailing '/'.
-    #GUILDED_CSS_FOLDER = "guilded/"
     GUILDED_NS = "guilded."
-    # JS_PATH = GUILDED_CONFIG[:js_path] if defined?( GUILDED_CONFIG )
-    # CSS_PATH = GUILDED_CONFIG[:css_path] if defined?( GUILDED_CONFIG )
       
     attr_reader :initialized_at
     
@@ -41,27 +51,37 @@ module Guilded
       @g_elements[ options[:id] ] = Guilded::ComponentDef.new( element, options, libs, styles )
     end
   
-    def count
+    def count #:nodoc:
       @g_elements.size
     end
     
+    # The number of Guilded components to be renderred.
+    #
     def component_count
       count
     end
     
+    # The current number of CSS assets necessary for the Guilded component set. 
+    #
     def style_count
       @combined_css_srcs.size
     end
     
+    # The current number of JavaScript assets necessary for the Guilded component set. 
+    #
     def script_count
       @combined_js_srcs.size
     end
     
+    # The collection of JavaScript assets for the current Guilded component set.
+    #
     def combined_js_srcs
       generate_asset_lists unless @assets_combined
       @combined_js_srcs
     end
     
+    # The collection of CSS assets for the current Guilded component set.
+    #
     def combined_css_srcs
       generate_asset_lists unless @assets_combined
       @combined_css_srcs
@@ -80,7 +100,7 @@ module Guilded
     # Generates the markup required to include all the assets necessary for the Guilded compoents in 
     # @g_elements collection.  Use this if you are not interested in caching asset files.
     #
-    def apply
+    def apply #:nodoc:
       to_init = ""
       generate_asset_lists unless @assets_combined
       @combined_css_srcs.each { |css| to_init << "<link href=\"/stylesheets/#{css}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />" }
@@ -92,7 +112,7 @@ module Guilded
     # Writes an initialization method that calls each Guilded components initialization method.  This 
     # method will exceute on document load finish.
     #
-    def generate_javascript_init
+    def generate_javascript_init #:nodoc:
       code = "<script type=\"text/javascript\">"
       code << "var initGuildedElements = function(){"
       @g_elements.each_value do |guilded_def| 
@@ -101,15 +121,21 @@ module Guilded
       code << "};jQuery('document').ready( initGuildedElements );</script>"
     end
     
+    # Generates a name to use when caching the current set of Guilded component JavaScript assets.  Sorts and concatenates
+    # the name of each JavaScript asset in @combined_js_srcs.  Then hashes this string to generate a reproducible, unique 
+    # and shorter string.
     def js_cache_name
       generate_js_cache_name( @combined_js_srcs )
     end
     
+    # Generates a name to use when caching the current set of Guilded component CSS assets.  Sorts and concatenates
+    # the name of each JavaScript asset in @combined_js_srcs.  Then hashes this string to generate a reproducible, unique 
+    # and shorter string.
     def css_cache_name
       generate_css_cache_name( @combined_css_srcs )
     end
     
-    def generate_js_cache_name( sources )      
+    def generate_js_cache_name( sources ) #:nodoc: 
       generate_asset_lists unless @assets_combined
       #return"#{controller.class.to_s.underscore}_#{controller.action_name}" if development?
       sorted_srcs = sources.sort
@@ -118,7 +144,7 @@ module Guilded
       "#{Digest::MD5.hexdigest( joined )}"
     end
     
-    def generate_css_cache_name( sources )
+    def generate_css_cache_name( sources ) #:nodoc:
       generate_asset_lists unless @assets_combined
       #return "#{controller.class.to_s.underscore}_#{controller.action_name}" if development?
       sorted_srcs = sources.sort
@@ -129,7 +155,7 @@ module Guilded
     
   protected
     
-    def configure_guilded
+    def configure_guilded #:nodoc: 
       @js_path = GUILDED_CONFIG[:js_path]
       @js_folder = GUILDED_CONFIG[:js_folder]
       @jquery_js = GUILDED_CONFIG[:jquery_js]
@@ -149,7 +175,7 @@ module Guilded
     # Adds the Guilded reset CSS file and the guilded.js and jQuery files to the respective sources
     # collections.
     #
-    def init_sources
+    def init_sources #:nodoc: 
       @combined_css_srcs << "#{@reset_css}" unless @reset_css.nil? || @reset_css.empty?
       @combined_js_srcs << "#{@jquery_js}" << "#{@js_folder}#{@guilded_js}"
     end
@@ -157,7 +183,7 @@ module Guilded
     # Combines all JavaScript and CSS files into lists to include based on what Guilded components are on 
     # the current page.
     #
-    def generate_asset_lists
+    def generate_asset_lists #:nodoc: 
       @assets_combined = true
       @g_elements.each_value do |defi|
         #TODO get stylesheet (skin) stuff using rails caching
@@ -179,7 +205,7 @@ module Guilded
     # libs An array of JavaScript libraries that this component depends on.  More than likely 
     #   a jQuery plugin, etc.
     #
-    def combine_js_sources( component, libs=[] )  #:doc:
+    def combine_js_sources( component, libs=[] )  #:nodoc:
       resolve_js_libs( libs )
       
       comp_src = add_guilded_js_path( component )
@@ -192,7 +218,7 @@ module Guilded
     # parts fo the name to try and get the debug version of the library.  If it cannot 
     # find the debug version of the file, it will just remain  what was initially provded.
     #
-    def resolve_js_libs( libs )
+    def resolve_js_libs( libs ) #:nodoc: 
       if development?
         # Try to use an unpacked or unminimized version
         libs.each do |lib|
@@ -214,7 +240,7 @@ module Guilded
     # Helper method that takes an array of js sources and adds the correct guilded
     # path to them.  Returns an array with the new path resolved sources.
     #
-    def map_guilded_js_paths( *sources )
+    def map_guilded_js_paths( *sources ) #:nodoc: 
       sources.map { |source| add_guilded_js_path( source ) }
     end
     
@@ -222,11 +248,13 @@ module Guilded
     # it looks for a .pack.js, .min.jsm .compressed.js and chooses one of these over the 
     # development version.
     #
-    def add_guilded_js_path( source )
+    def add_guilded_js_path( source ) #:nodoc: 
       part = "#{@js_folder}#{GUILDED_NS}#{source.to_s}"
       ext = 'js'
       
       return "#{part}.#{ext}" if development?
+ 
+      #TODO: switch this to take min, pack or compressed out if in development mode for efficiency in production
  
       possibles = {
         "#{@js_path}#{part}.pack.#{ext}" => "#{part}.pack.#{ext}",
@@ -242,7 +270,7 @@ module Guilded
       "" # Should never reach here
     end
     
-    def combine_css_sources( component, skin, styles=[] )  #:doc:
+    def combine_css_sources( component, skin, styles=[] ) #:nodoc: 
       # Get all of this components defined external styles
       styles.each do |style|
         @combined_css_srcs.push( style ) unless @combined_css_srcs.include?( style )
@@ -257,14 +285,14 @@ module Guilded
       @combined_css_srcs.push( skin_user_src ) unless @combined_css_srcs.include?( skin_user_src ) || skin_user_src.empty?
     end
     
-    def add_guilded_css_path( source, skin )
+    def add_guilded_css_path( source, skin ) #:nodoc: 
       skin = 'default' if skin.nil? || skin.empty?
       part = "#{@css_folder}#{source.to_s}/#{skin}.css"
       path = "#{@css_path}#{part}"
       File.exists?( path ) ? part : ''
     end
     
-    def development?
+    def development? #:nodoc: 
       @env == :development
     end
     
