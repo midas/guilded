@@ -32,8 +32,6 @@ module Guilded
         raise Guilded::Exceptions::MissingConfiguration
       end
       @initialized_at = Time.now
-      @env = options[:env].to_sym if options[:env]
-      @env ||= :production
       @g_elements = Hash.new
       @combined_js_srcs = Array.new
       @combined_css_srcs = Array.new
@@ -163,6 +161,8 @@ module Guilded
       @css_path = GUILDED_CONFIG[:css_path]
       @css_folder = GUILDED_CONFIG[:css_folder]
       @reset_css = GUILDED_CONFIG[:reset_css]
+      @env = GUILDED_CONFIG[:environment]
+      @env ||= :production
       @js_path.freeze
       @css_path.freeze
       @js_folder.freeze
@@ -170,6 +170,7 @@ module Guilded
       @guilded_js.freeze
       @css_folder.freeze
       @reset_css.freeze
+      @env.freeze
     end
     
     # Adds the Guilded reset CSS file and the guilded.js and jQuery files to the respective sources
@@ -293,7 +294,15 @@ module Guilded
     end
     
     def development? #:nodoc: 
-      @env == :development
+      @env.to_sym == :development
+    end
+    
+    def production? #:nodoc: 
+      @env.to_sym == :production
+    end
+    
+    def test? #:nodoc: 
+      @env.to_sym == :test
     end
     
   end

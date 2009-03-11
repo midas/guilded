@@ -68,7 +68,7 @@ require 'guilded/rails/view_helpers'
 #   <%= g_load_alerter :skin => 'blueish', :id => 'load_alerter' %>
 #
 module Guilded
-  VERSION = '0.0.5'
+  VERSION = '0.0.6'
 end
 
 ActionView::Base.send( :include, Guilded::Rails::ViewHelpers ) if defined?( ActionView )

@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/lib/guilded'
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
 $hoe = Hoe.new('guilded', Guilded::VERSION) do |p|
-  p.developer('midas', 'jaosn@lookforwardenterprises.com')
+  p.developer('C. Jason Harrelson (midas)', 'jason@lookforwardenterprises.com')
   p.changes              = p.paragraphs_of("History.txt", 0..1).join("\n\n")
   p.post_install_message = 'PostInstall.txt' # TODO remove if post-install message not required
   p.rubyforge_name       = p.name # TODO this is default value

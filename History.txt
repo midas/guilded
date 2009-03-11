@@ -1,4 +1,8 @@
+== 0.0.6 2009-02-11
+
+* Updated config file and Guilder to accept an :env variable.  This variable will allow Guilded to know what environment
+  it is running in so that it knows whether to cache assets, etc.
+
 == 0.0.1 2009-02-28
 
-* 1 major enhancement:
-  * Initial release
+* Initial release
