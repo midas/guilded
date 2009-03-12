@@ -4,6 +4,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 require 'guilded/component_def'
 require 'guilded/guilder'
 require 'guilded/exceptions'
+require 'guilded/rails/helpers'
 require 'guilded/rails/view_helpers'
 require 'guilded/rails/active_record/human_attribute_hint'
 require 'guilded/rails/active_record/human_attribute_override'
@@ -70,7 +71,7 @@ require 'guilded/rails/active_record/human_attribute_override'
 #   <%= g_load_alerter :skin => 'blueish', :id => 'load_alerter' %>
 #
 module Guilded
-  VERSION = '0.0.8'
+  VERSION = '0.0.9'
 end
 
 ActionView::Base.send( :include, Guilded::Rails::ViewHelpers ) if defined?( ActionView )
