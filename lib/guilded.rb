@@ -71,7 +71,7 @@ require 'guilded/rails/active_record/human_attribute_override'
 #   <%= g_load_alerter :skin => 'blueish', :id => 'load_alerter' %>
 #
 module Guilded
-  VERSION = '0.0.9'
+  VERSION = '0.1.0'
 end
 
 ActionView::Base.send( :include, Guilded::Rails::ViewHelpers ) if defined?( ActionView )
