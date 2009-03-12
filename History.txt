@@ -1,7 +1,18 @@
-== 0.0.6 2009-02-11
+== 0.0.8 2009-03-12
+
+* Added attr_human_override and attr_human_hint
+
+
+== 0.0.7 2009-03-11
+
+* Bug fixes
+
+
+== 0.0.6 2009-03-11
 
 * Updated config file and Guilder to accept an :env variable.  This variable will allow Guilded to know what environment
   it is running in so that it knows whether to cache assets, etc.
+
 
 == 0.0.1 2009-02-28
 
