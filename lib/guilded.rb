@@ -5,6 +5,8 @@ require 'guilded/component_def'
 require 'guilded/guilder'
 require 'guilded/exceptions'
 require 'guilded/rails/view_helpers'
+require 'guilded/rails/active_record/human_attribute_hint'
+require 'guilded/rails/active_record/human_attribute_override'
 
 # Guilded is a framework for creating reusable UI components for web applications.  Guilded provides the facilities to 
 # easily add components and all of their required assets to a page.
