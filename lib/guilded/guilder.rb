@@ -75,14 +75,14 @@ module Guilded
     # The collection of JavaScript assets for the current Guilded component set.
     #
     def combined_js_srcs
-      generate_asset_lists unless @assets_combined
+      #generate_asset_lists unless @assets_combined
       @combined_js_srcs
     end
     
     # The collection of CSS assets for the current Guilded component set.
     #
     def combined_css_srcs
-      generate_asset_lists unless @assets_combined
+      #generate_asset_lists unless @assets_combined
       @combined_css_srcs
     end
     
@@ -94,8 +94,18 @@ module Guilded
       @g_elements.clear
       @assets_combined = false
       init_sources
+      @default_css_count = @combined_css_srcs.size
+      @default_js_count = @combined_js_srcs.size
     end
 
+    def inject_css( *sources )
+      @combined_css_srcs.insert( @default_css_count, *sources )
+    end
+    
+    def inject_js( *sources )
+      @combined_js_srcs.insert( @default_js_count, *sources )
+    end
+    
     # Generates the markup required to include all the assets necessary for the Guilded compoents in 
     # @g_elements collection.  Use this if you are not interested in caching asset files.
     #

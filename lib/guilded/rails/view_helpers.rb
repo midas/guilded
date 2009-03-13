@@ -61,8 +61,14 @@ module Guilded
       # resets, etc and not override any guilded components styles.
       #
       def g_stylesheet_link_tag( *sources )
+        options = sources.extract_options!
         g = Guilded::Guilder.instance
-        g.combined_css_srcs.push( *sources )
+        
+        if options[:ensure_primary]
+          g.inject_css( *sources )
+        else
+          g.combined_css_srcs.push( *sources )
+        end
         ''
       end
 
