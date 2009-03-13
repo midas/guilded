@@ -35,16 +35,17 @@ module Guilded
       # Utilizes the js_include_tag helper from Rails.
       #
       def g_javascript_include_tag( *sources )
-        @combined_js_srcs = Array.new if @combined_js_srcs.nil?
+        g = Guilded::Guilder.instance
+        #@combined_js_srcs = Array.new if @combined_js_srcs.nil?
         defaults = nil
         if sources.include?( :defaults )
           defaults = ActionView::Helpers::AssetTagHelper::JAVASCRIPT_DEFAULT_SOURCES
           sources.delete( :defaults )
         end
         if defaults
-          @combined_js_srcs.push( *(sources << defaults) )
+          g.combined_js_srcs.push( *(sources << defaults) )
         else
-          @combined_js_srcs.push( *sources )
+          g.combined_js_srcs.push( *sources )
         end
         ''
       end
@@ -61,8 +62,9 @@ module Guilded
       # resets, etc and not override any guilded components styles.
       #
       def g_stylesheet_link_tag( *sources )
-        @combined_css_srcs = Array.new if @combined_css_srcs.nil?
-        @combined_css_srcs.push( sources )
+        g = Guilded::Guilder.instance
+        #@combined_css_srcs = Array.new if @combined_css_srcs.nil?
+        g.combined_css_srcs.push( sources )
         ''
       end
 
