@@ -36,7 +36,6 @@ module Guilded
       #
       def g_javascript_include_tag( *sources )
         g = Guilded::Guilder.instance
-        #@combined_js_srcs = Array.new if @combined_js_srcs.nil?
         defaults = nil
         if sources.include?( :defaults )
           defaults = ActionView::Helpers::AssetTagHelper::JAVASCRIPT_DEFAULT_SOURCES
@@ -63,8 +62,7 @@ module Guilded
       #
       def g_stylesheet_link_tag( *sources )
         g = Guilded::Guilder.instance
-        #@combined_css_srcs = Array.new if @combined_css_srcs.nil?
-        g.combined_css_srcs.push( sources )
+        g.combined_css_srcs.push( *sources )
         ''
       end
 
