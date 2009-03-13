@@ -1,3 +1,8 @@
+== 0.1.2 2009-03-13
+
+* Fixed a bug with stylesheet and JS tag helpers.
+
+
 == 0.1.0 2009-03-12
 
 * Fixed a bug with requiring files.
