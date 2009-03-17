@@ -1,3 +1,9 @@
+== 0.1.4 2009-03-17
+
+* Added include_component? method for testing if a component type is already present in the Guilded elements collection
+* Fixed bug with Exception raising in add method
+
+
 == 0.1.2 2009-03-13
 
 * Fixed a bug with stylesheet and JS tag helpers.
