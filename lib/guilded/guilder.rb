@@ -45,9 +45,9 @@ module Guilded
     # Adds an element with its options to the @g_elements hash to be used later.
     #
     def add( element, options={}, libs=[], styles=[] )
-      raise Guilded::Exceptions::IdMissing unless options.has_key?( :id )
-      raise Guilded::Exceptions::DuplicateElementId( options[:id] ) if @g_elements.has_key?( options[:id] )
-      @g_elements[ options[:id] ] = Guilded::ComponentDef.new( element, options, libs, styles )
+      raise Guilded::Exceptions::IdMissing.new unless options.has_key?( :id )
+      raise Guilded::Exceptions::DuplicateElementId.new( options[:id] ) if @g_elements.has_key?( options[:id] )
+      @g_elements[ options[:id].to_sym ] = Guilded::ComponentDef.new( element, options, libs, styles )
     end
   
     def count #:nodoc:
@@ -70,6 +70,12 @@ module Guilded
     #
     def script_count
       @combined_js_srcs.size
+    end
+    
+    # Returns true if the component type is included, otherwise false.
+    #
+    def include_component?( type )
+      @g_elements.has_key?( type.to_sym )
     end
     
     # The collection of JavaScript assets for the current Guilded component set.
