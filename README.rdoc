@@ -103,13 +103,13 @@ do not have to include it in every template):
 You also must reset the Guilded singleton that manages everything after each renderring.  The best way to do this is a before 
 filter in your applicaiton controller:
 
-	before_filter :reset_guilded
+  before_filter :reset_guilded
 	
-	#...
+  #...
 	
-	protected
+  protected
 	
-	def reset_guilded
+  def reset_guilded
     Guilded::Guilder.instance.reset!
   end
 
