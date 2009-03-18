@@ -95,6 +95,24 @@ Edit the settings file at config/initializers/load_guilded_settings.rb.  Change 
 you would like Guilded to be configured.  If you change where any file(s) are configured to be located, then also move 
 the respective file(s).
 
+There is a single view helper to apply the JavaScript and CSS.  You can place this at the bottom of your layouts (so you
+do not have to include it in every template):
+
+  <%= g_apply_behavior %>
+
+You also must reset the Guilded singleton that manages everything after each renderring.  The best way to do this is a before 
+filter in your applicaiton controller:
+
+	before_filter :reset_guilded
+	
+	#...
+	
+	protected
+	
+	def reset_guilded
+    Guilded::Guilder.instance.reset!
+  end
+
 
 == LICENSE
 
