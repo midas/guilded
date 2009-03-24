@@ -1,3 +1,9 @@
+== 0.1.5 2009-03-24
+
+* Added g_apply_style helper
+* Added functionality to put CSS lnink tags in teh them header, where they belong
+
+
 == 0.1.4 2009-03-17
 
 * Added include_component? method for testing if a component type is already present in the Guilded elements collection

@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{guilded}
-  s.version = "0.1.4"
+  s.version = "0.1.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["C. Jason Harrelson (midas)"]
-  s.date = %q{2009-03-17}
+  s.date = %q{2009-03-24}
   s.description = %q{Warning: This project just started and there are no stable releases available yet.  Guilded is a framework for building web based components centered around current web standards and best practices. The current  framework is written in ruby, but could be ported to other languages.  Guilded intends to provide a toolset for creating and consuming reusable web components.  Currently, this problem domain is filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade and are not accessible.  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability  and accessibility.  Guilded will achieve these goals by applying each technology at our disposal to do what it was intended.    XHTML will be employed for content.  CSS used for layout and styling.  Behavior will be added to a component with JavaScript  through progressive enhancement.  The user will have the best experience with a Guilded component when CSS and JavaScript are  enabled in their browser, but will still be able to use the component when CSS and JavaScript are disabled.   Guilded will use jQuery as it's base JavaScript framework.  jQuery was chosen because it lends itself to progressive enhancement due to the way it was authored.  In addition, the tight integration of jQuery's selectors with CSS selectors is also highly  desirable.  When authoring a Guilded component, it is encouraged to write the behavior code as a jQuery plugin.  This will  allow the jQuery plugin to be used outside of the Guilded project, if desired.  Guilded also seeks to provide a standardized CSS framework for creating layouts that are reusable and predictable.  Guilded will utilize the currently existing RubyGems system to package its components.  A new Guilded component will be packaged  in a Gem and have a dependency on the guilded gem.  The Guilded-Base gem contains the framework to build Guilded components.}
   s.email = ["jason@lookforwardenterprises.com"]
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "PostInstall.txt", "README.rdoc"]
