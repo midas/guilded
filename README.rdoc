@@ -79,7 +79,7 @@ The Guilded-Base gem contains the framework to build Guilded components.
 
 Add to environment file:
 
-  config.gem "guilded", :version => '0.1.6'
+  config.gem "guilded", :version => '0.1.7'
 
 Run:
 
