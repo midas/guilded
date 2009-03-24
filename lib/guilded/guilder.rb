@@ -178,6 +178,7 @@ module Guilded
       @css_path = GUILDED_CONFIG[:css_path]
       @css_folder = GUILDED_CONFIG[:css_folder]
       @reset_css = GUILDED_CONFIG[:reset_css]
+      #@do_reset_css = GUILDED_CONFIG[:do_reset_css]
       @env = GUILDED_CONFIG[:environment]
       @env ||= :production
       @js_path.freeze
@@ -187,6 +188,7 @@ module Guilded
       @guilded_js.freeze
       @css_folder.freeze
       @reset_css.freeze
+      #@do_reset_css.freeze
       @env.freeze
     end
     
