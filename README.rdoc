@@ -1,10 +1,8 @@
 = guilded-base
 
-http://github.com/midas/guilded-base/tree/master
+http://github.com/midas/guilded/tree/master
 
 == DESCRIPTION
-
-Warning: This project just started and there are no stable releases available yet.
 
 Guilded is a framework for building web based components centered around current web standards and best practices. The current 
 framework is written in ruby, but could be ported to other languages.
@@ -79,7 +77,7 @@ The Guilded-Base gem contains the framework to build Guilded components.
 
 Add to environment file:
 
-  config.gem "guilded", :version => '0.1.7'
+  config.gem "guilded", :version => '0.1.8'
 
 Run:
 
@@ -95,13 +93,17 @@ Edit the settings file at config/initializers/load_guilded_settings.rb.  Change 
 you would like Guilded to be configured.  If you change where any file(s) are configured to be located, then also move 
 the respective file(s).
 
-There is a single view helper to apply the JavaScript and CSS.  You can place this at the bottom of your layouts (so you
+Next you must make a call to the view helper to apply the CSS  It should be placed in your layout:
+
+  <%= g_apply_style %>
+
+There is also a view helper to apply the JavaScript.  You can place this at the bottom of your layouts (so you
 do not have to include it in every template):
 
   <%= g_apply_behavior %>
 
-You also must reset the Guilded singleton that manages everything after each renderring.  The best way to do this is a before 
-filter in your applicaiton controller:
+You also must reset the Guilded singleton that manages everything after each rendering.  The best way to do this is a before 
+filter in your application controller:
 
   before_filter :reset_guilded
 	

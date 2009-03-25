@@ -11,7 +11,7 @@ module Guilded
       # call to g_apply_behavior will not output anything.
       #
       def g_apply_behavior
-        #self.output_buffer.sub!( /<!-- guilded.styles -->/, stylesheet_link_tag( Guilded::Guilder.instance.combined_css_srcs, :cache => "cache/#{Guilded::Guilder.instance.css_cache_name}" ) )
+        self.output_buffer.sub!( /<!-- guilded.styles -->/, stylesheet_link_tag( Guilded::Guilder.instance.combined_css_srcs, :cache => "cache/#{Guilded::Guilder.instance.css_cache_name}" ) )
         html = javascript_include_tag( Guilded::Guilder.instance.combined_js_srcs, :cache => "cache/#{Guilded::Guilder.instance.js_cache_name}" )
         html << Guilded::Guilder.instance.generate_javascript_init
         html
