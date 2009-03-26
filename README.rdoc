@@ -77,7 +77,7 @@ The Guilded-Base gem contains the framework to build Guilded components.
 
 Add to environment file:
 
-  config.gem "guilded", :version => '0.1.8'
+  config.gem "guilded", :version => '0.1.9'
 
 Run:
 
@@ -118,7 +118,7 @@ filter in your application controller:
 
 == LICENSE
 
-Copyright (c) 2009 C. Jason Harrelson
+Copyright (c) 2009 C. Jason Harrelson (midas)
 
 THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
