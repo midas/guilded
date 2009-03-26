@@ -28,6 +28,7 @@ script/destroy
 script/generate
 spec/guilded/component_def_spec.rb
 spec/guilded/guilder_spec.rb
+spec/guilded/rails/helpers_spec.rb
 spec/guilded_spec.rb
 spec/spec.opts
 spec/spec_helper.rb

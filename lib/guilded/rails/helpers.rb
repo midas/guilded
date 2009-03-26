@@ -1,9 +1,28 @@
 module Guilded
   module Rails
     
+    require 'active_support'
+    
     # Common functionality that Rails Guilded components may need to use.
     #
     class Helpers
+      
+      def self.resolve_rest_path_helpers( ar_obj, options={} )
+        plural_ar_type = ar_obj.class.to_s.tableize
+        singular_ar_type = plural_ar_type.singularize
+        helpers = Hash.new
+        helpers[:index_rest_helper] = "#{plural_ar_type}_path"
+        helpers[:index_rest_args] = []
+        helpers[:show_rest_helper] = "#{singular_ar_type}_path"
+        helpers[:show_rest_args] = [ar_obj]
+        helpers[:new_rest_helper] = "new_#{singular_ar_type}_path"
+        helpers[:new_rest_args] = []
+        helpers[:edit_rest_helper] = "edit_#{singular_ar_type}_path"
+        helpers[:edit_rest_args] = [ar_obj]
+        helpers[:delete_rest_helper] = "delete_#{singular_ar_type}_path"
+        helpers[:delete_rest_args] = [ar_obj]
+        return helpers
+      end
       
       # Helper method that generates a path from an item.  If item is :home then this method
       # will call the home_path method to generate a link

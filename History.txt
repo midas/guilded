@@ -1,4 +1,9 @@
-== 0.1.5 2009-03-24
+= 0.1.9 
+
+* Added Rails helper method to resolve REST path helpers and args
+
+
+= 0.1.5 2009-03-24
 
 * Added g_apply_style helper
 * Added functionality to put CSS link tags in the HTML header, where they belong
