@@ -9,27 +9,49 @@ module Guilded
       
       # Resolves the REST path helper names and arguments from a ActiveRecord object(s).
       #
-      def self.resolve_rest_path_helpers( ar_obj_or_collection, options={} )
-        if ar_obj_or_collection.is_a?( Array )
-          ar_obj = ar_obj_or_collection[0]
-        else
-          ar_obj = ar_obj_or_collection
-        end
+      def self.resolve_rest_path_helpers( ar_obj_or_collection, options={} )        
+        ar_obj = ar_obj_or_collection.is_a?( Array ) ? ar_obj_or_collection[0] : ar_obj_or_collection
         
         plural_ar_type = ar_obj.class.to_s.tableize
         singular_ar_type = plural_ar_type.singularize
+        polymorphic_as = options[:polymorphic_as]
+        polymorphic_type = options[:polymorphic_type]
+        plural_polymorphic_type = polymorphic_type ? polymorphic_type.to_s.tableize : nil
+        singular_polymorphic_type = polymorphic_type ? plural_polymorphic_type.singularize : nil
+        plural_derived_type = polymorphic_type.nil? ? plural_ar_type : plural_polymorphic_type
+        singular_derived_type = polymorphic_type.nil? ? singular_ar_type : singular_polymorphic_type
+        pre = ""
+        shallow_pre = ""
+        scoped_by = Array.new
+        shallow_scoped_by = Array.new
         helpers = Hash.new
         
-        helpers[:index_rest_helper] = "#{plural_ar_type}_path"
-        helpers[:index_rest_args] = []
-        helpers[:show_rest_helper] = "#{singular_ar_type}_path"
-        helpers[:show_rest_args] = [ar_obj]
-        helpers[:new_rest_helper] = "new_#{singular_ar_type}_path"
-        helpers[:new_rest_args] = []
-        helpers[:edit_rest_helper] = "edit_#{singular_ar_type}_path"
-        helpers[:edit_rest_args] = [ar_obj]
-        helpers[:delete_rest_helper] = "delete_#{singular_ar_type}_path"
-        helpers[:delete_rest_args] = [ar_obj]
+        if options[:namespace]
+          pre << "#{options[:namespace].to_s}_"
+          shallow_pre << "#{options[:namespace].to_s}_" 
+        end
+        
+        if options[:scoped_by]
+          scoped_by = options[:scoped_by].is_a?( Array ) ? options[:scoped_by] : Array.new << options[:scoped_by]
+          scoped_by.each_with_index do |scoper, i|
+            scoper_name = scoper.class.to_s.tableize.singularize
+            shallow_pre << "#{scoper_name}_" unless options[:shallow] && i == scoped_by.size-1
+            pre << "#{scoper_name}_"
+          end
+          shallow_scoped_by = scoped_by.clone
+          shallow_scoped_by.pop if options[:shallow]
+        end
+        
+        helpers[:index_rest_helper] = "#{pre}#{plural_derived_type}_path"
+        helpers[:index_rest_args] = scoped_by
+        helpers[:show_rest_helper] = "#{shallow_pre}#{singular_derived_type}_path"
+        helpers[:show_rest_args] = shallow_scoped_by
+        helpers[:new_rest_helper] = "new_#{pre}#{singular_derived_type}_path"
+        helpers[:new_rest_args] = scoped_by
+        helpers[:edit_rest_helper] = "edit_#{shallow_pre}#{singular_derived_type}_path"
+        helpers[:edit_rest_args] = shallow_scoped_by
+        helpers[:delete_rest_helper] = "delete_#{shallow_pre}#{singular_derived_type}_path"
+        helpers[:delete_rest_args] = shallow_scoped_by
         
         return helpers
       end
