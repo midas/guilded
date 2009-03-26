@@ -7,10 +7,19 @@ module Guilded
     #
     class Helpers
       
-      def self.resolve_rest_path_helpers( ar_obj, options={} )
+      # Resolves the REST path helper names and arguments from a ActiveRecord object(s).
+      #
+      def self.resolve_rest_path_helpers( ar_obj_or_collection, options={} )
+        if ar_obj_or_collection.is_a?( Array )
+          ar_obj = ar_obj_or_collection[0]
+        else
+          ar_obj = ar_obj_or_collection
+        end
+        
         plural_ar_type = ar_obj.class.to_s.tableize
         singular_ar_type = plural_ar_type.singularize
         helpers = Hash.new
+        
         helpers[:index_rest_helper] = "#{plural_ar_type}_path"
         helpers[:index_rest_args] = []
         helpers[:show_rest_helper] = "#{singular_ar_type}_path"
@@ -21,6 +30,7 @@ module Guilded
         helpers[:edit_rest_args] = [ar_obj]
         helpers[:delete_rest_helper] = "delete_#{singular_ar_type}_path"
         helpers[:delete_rest_args] = [ar_obj]
+        
         return helpers
       end
       
