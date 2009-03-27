@@ -174,7 +174,9 @@ module Guilded
       @js_path = GUILDED_CONFIG[:js_path]
       @js_folder = GUILDED_CONFIG[:js_folder]
       @jquery_js = GUILDED_CONFIG[:jquery_js]
-      @guilded_js = 'guilded.min.js' 
+      @jquery_folder = GUILDED_CONFIG[:jquery_folder] || 'jquery/'
+      @guilded_js = 'guilded.min.js'
+      @url_js = 'jquery-url.min.js'
       @css_path = GUILDED_CONFIG[:css_path]
       @css_folder = GUILDED_CONFIG[:css_folder]
       @reset_css = GUILDED_CONFIG[:reset_css]
@@ -184,7 +186,10 @@ module Guilded
       @js_path.freeze
       @css_path.freeze
       @js_folder.freeze
+      @guilded_js.freeze
+      @url_js.freeze
       @jquery_js.freeze
+      @jquery_folder.freeze
       @guilded_js.freeze
       @css_folder.freeze
       @reset_css.freeze
@@ -197,8 +202,7 @@ module Guilded
     #
     def init_sources #:nodoc: 
       @combined_css_srcs << "#{@reset_css}" unless @reset_css.nil? || @reset_css.empty?
-      #@combined_js_srcs << "#{@jquery_js}" << "#{@js_folder}#{@guilded_js}"
-      resolve_js_libs( "#{@jquery_js}", "#{@js_folder}#{@guilded_js}" )
+      resolve_js_libs( "#{@jquery_js}", "#{@jquery_folder}#{@url_js}", "#{@js_folder}#{@guilded_js}" )
     end
     
     # Combines all JavaScript and CSS files into lists to include based on what Guilded components are on 

@@ -1,4 +1,9 @@
-= 0.1.9 
+= 0.2.0 2009-03-27
+
+* Added Mark Perkins jquery-url plugin and made it a default library
+
+
+= 0.1.9 2009-03-26
 
 * Added Rails helper method to resolve REST path helpers and args
 
