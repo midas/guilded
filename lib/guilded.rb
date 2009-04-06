@@ -8,6 +8,7 @@ require 'guilded/rails/helpers'
 require 'guilded/rails/view_helpers'
 require 'guilded/rails/active_record/human_attribute_hint'
 require 'guilded/rails/active_record/human_attribute_override'
+require 'guilded/rails/inactive_record/human_attribute_hint'
 
 # Guilded is a framework for creating reusable UI components for web applications.  Guilded provides the facilities to 
 # easily add components and all of their required assets to a page.
@@ -71,7 +72,7 @@ require 'guilded/rails/active_record/human_attribute_override'
 #   <%= g_load_alerter :skin => 'blueish', :id => 'load_alerter' %>
 #
 module Guilded
-  VERSION = '0.2.0'
+  VERSION = '0.2.1'
 end
 
 ActionView::Base.send( :include, Guilded::Rails::ViewHelpers ) if defined?( ActionView )

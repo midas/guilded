@@ -12,6 +12,7 @@ lib/guilded/rails.rb
 lib/guilded/rails/active_record/human_attribute_hint.rb
 lib/guilded/rails/active_record/human_attribute_override.rb
 lib/guilded/rails/helpers.rb
+lib/guilded/rails/inactive_record/human_attribute_hint.rb
 lib/guilded/rails/view_helpers.rb
 rails_generators/guilded_assets/guilded_assets_generator.rb
 rails_generators/guilded_assets/templates/guilded.js
