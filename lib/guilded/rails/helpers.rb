@@ -9,8 +9,14 @@ module Guilded
       
       # Resolves the REST path helper names and arguments from a ActiveRecord object(s).
       #
-      def self.resolve_rest_path_helpers( ar_obj_or_collection, options={} )        
-        ar_obj = ar_obj_or_collection.is_a?( Array ) ? ar_obj_or_collection[0] : ar_obj_or_collection
+      def self.resolve_rest_path_helpers( ar_obj_col_or_class, options={} )        
+        if ar_obj_col_or_class.is_a?( Array )
+          ar_obj = ar_obj_col_or_class[0]
+        elsif ar_obj_col_or_class.is_a?( ActiveRecord::Base )
+          ar_obj = ar_obj_col_or_class
+        elsif ar_obj_col_or_class.is_a?( Class )
+          ar_obj = ar_obj_col_or_class.new
+        end
         
         plural_ar_type = ar_obj.class.to_s.tableize
         singular_ar_type = plural_ar_type.singularize
