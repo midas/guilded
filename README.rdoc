@@ -58,6 +58,20 @@ The Guilded-Base gem contains the framework to build Guilded components.
 * In production mode, Guilded automatically looks for a .pack, .compressed or .min version of the JavaScript assets.  If one of 
   these is found, it includes it, otherwise, it includes the version specified by the author in the view helper.  This is usually an unpacked version of the file.
 
+
+== GUILDED COMPONENT PROJECTS
+
+* http://github.com/midas/g_already_grid/tree/master
+* http://github.com/midas/g_auto_completer/tree/master
+* http://github.com/midas/g_flash_growler/tree/master
+* http://github.com/midas/g_flot/tree/master
+* http://github.com/midas/g_form_submit_protector/tree/master
+* http://github.com/midas/g_named_scope_filters/tree/master
+* http://github.com/midas/g_nested_select/tree/master
+* http://github.com/midas/g_sectioned_shower/tree/master
+* http://github.com/midas/g_toggle_block/tree/master
+
+
 == PROBLEMS
 
 
