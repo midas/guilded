@@ -34,6 +34,7 @@ module Guilded
       end
       @initialized_at = Time.now
       @g_elements = Hash.new
+      @g_data_elements = Hash.new
       @combined_js_srcs = Array.new
       @combined_css_srcs = Array.new
       @assets_combined = false
@@ -48,6 +49,17 @@ module Guilded
       raise Guilded::Exceptions::IdMissing.new unless options.has_key?( :id )
       raise Guilded::Exceptions::DuplicateElementId.new( options[:id] ) if @g_elements.has_key?( options[:id] )
       @g_elements[ options[:id].to_sym ] = Guilded::ComponentDef.new( element, options, libs, styles )
+    end
+    
+    # Adds a data structure to be passed to the Guilded JavaScript environment for use on the client 
+    # side.  The data is passed using the ruby to_json method on the data structure provided.
+    #
+    # === Parameters
+    # * +name+ - The desired name of the variable on the client side.
+    # * +data+ - The data to pass to the Guilded JavaScript environment. 
+    #
+    def add_data( name, data )
+      @g_data_elements.merge!( name.to_sym => data )
     end
   
     def count #:nodoc:
@@ -130,15 +142,19 @@ module Guilded
     def generate_javascript_init #:nodoc:
       code = "<script type=\"text/javascript\">"
       code << "var initGuildedElements = function(){"
-      @g_elements.each_value do |guilded_def| 
-        code << "g.#{guilded_def.kind.to_s.camelize( :lower )}Init( #{guilded_def.options.to_json} );" unless guilded_def.exclude_js?
+      @g_data_elements.each do |name, data|
+        code << "g.#{name} = #{data.to_json};" 
       end
-      code << "};jQuery('document').ready( initGuildedElements );</script>"
+      @g_elements.each_value do |guilded_def| 
+        code << "g.#{guilded_def.kind.to_s.camelize( :lower )}Init(#{guilded_def.options.to_json});" unless guilded_def.exclude_js?
+      end
+      code << "jQuery('body').trigger('guildedInitialized');};jQuery('document').ready(initGuildedElements);</script>"
     end
     
     # Generates a name to use when caching the current set of Guilded component JavaScript assets.  Sorts and concatenates
     # the name of each JavaScript asset in @combined_js_srcs.  Then hashes this string to generate a reproducible, unique 
     # and shorter string.
+    #
     def js_cache_name
       generate_js_cache_name( @combined_js_srcs )
     end
@@ -146,6 +162,7 @@ module Guilded
     # Generates a name to use when caching the current set of Guilded component CSS assets.  Sorts and concatenates
     # the name of each JavaScript asset in @combined_js_srcs.  Then hashes this string to generate a reproducible, unique 
     # and shorter string.
+    #
     def css_cache_name
       generate_css_cache_name( @combined_css_srcs )
     end

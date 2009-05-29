@@ -1,4 +1,4 @@
-= guilded-base
+= guilded
 
 http://github.com/midas/guilded/tree/master
 
@@ -8,8 +8,8 @@ Guilded is a framework for building web based components centered around current
 framework is written in ruby, but could be ported to other languages.
 
 Guilded intends to provide a toolset for creating and consuming reusable web components.  Currently, this problem domain is
-filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade and are
-not accessible.  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability 
+filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade gracefully and 
+are not accessible.  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability 
 and accessibility.  Guilded will achieve these goals by applying each technology at our disposal to do what it was intended.  
 
 XHTML will be employed for content.  CSS used for layout and styling.  Behavior will be added to a component with JavaScript 
@@ -24,9 +24,9 @@ allow the jQuery plugin to be used outside of the Guilded project, if desired.
 Guilded also seeks to provide a standardized CSS framework for creating layouts that are reusable and predictable.
 
 Guilded will utilize the currently existing RubyGems system to package its components.  A new Guilded component will be packaged 
-in a Gem and have a dependency on the guilded gem.
+in a Gem and have a dependency on the Guilded gem.
 
-The Guilded-Base gem contains the framework to build Guilded components.
+The Guilded gem contains the framework to build Guilded components.
 
 
 == FEATURES
@@ -36,16 +36,23 @@ The Guilded-Base gem contains the framework to build Guilded components.
 * Automatic addition of Yahoo's reset-min.css.
 * Redefinition of jQuery's $ method to $j and running jQuery in no conflict mode to allow other libraries to retain control 
   of the $ method.
-* Definition of the g namespace to avoid JavaScript name collisions.
+* Definition of the g namespace to avoid JavaScript name collisions.  Simply define your custom functions within the g object.
+* Definition of convenience method $j().  Equivalent to jQuery() or $().  Guilded runs jQuery in no conflict mode, giving the $
+  back to any other JavaScript frameworks in use.  You must use $j() or jQuery() in lieu of $().
 * Definition of convenience method $jc().  Equivalent to jQuery( '.' + className ).
 * Definition of convenience method $jid().  Equivalent to jQuery( '#' + idName ). 
 * The assets required for each component are added by the author to a central data store.  When the view helper to create
   the component is called, these assets are added to the asset store.  This results in a single method call with some options
-  to use a Guilded component.
+  to use a Guilded component.  No need to include JavaScript source files or CSS files.  Guilded automatically does this for 
+  you.
 * For CSS assets, Guilded simply loops through the collection of CSS assets creating an HTML link tag for each asset, or one 
   HTML link tag for the cached version of these asset(s), when running in production mode.
 * For JavaScript assets, Guilded loops through the collection of JavaScript assets creating an HTML script tag for each, or a
   single script tag for the cached version of these asset(s), when running in production mode.
+* Pass named data structures from the server to the client side environment for use with the Guilder.add_data() method.  Once Guilded
+  is initialized, the data structure will be instantiated for you with the name specified within the g object.
+* Execute custom JavaScript code after all Guilded components are initialized (ensuring everything you wish to use is instantiated) 
+  using the 'guildedInitialized' custom jQuery event defined on the body DOM element.
 
 === Caching of CSS and JavaScript assets needed to render a web page.
 * The CSS assets are cached to form one file.  In addition, the JavaScript assets are cached to form one file.  These files are 
@@ -56,7 +63,8 @@ The Guilded-Base gem contains the framework to build Guilded components.
 
 === Automatic choosing of packed, compressed or minified JavaScript files when in production mode.
 * In production mode, Guilded automatically looks for a .pack, .compressed or .min version of the JavaScript assets.  If one of 
-  these is found, it includes it, otherwise, it includes the version specified by the author in the view helper.  This is usually an unpacked version of the file.
+  these is found, it includes it, otherwise, it includes the version specified by the author in the view helper.  This is usually 
+  an unpacked version of the file.
 
 
 == GUILDED COMPONENT PROJECTS
@@ -111,7 +119,7 @@ Next you must make a call to the view helper to apply the CSS  It should be plac
 
   <%= g_apply_style %>
 
-There is also a view helper to apply the JavaScript.  You can place this at the bottom of your layouts (so you
+There is also a view helper to apply the JavaScript.  You can place this at the bottom of your layout(s) (so you
 do not have to include it in every template):
 
   <%= g_apply_behavior %>
@@ -129,6 +137,7 @@ filter in your application controller:
     Guilded::Guilder.instance.reset!
   end
 
+Then install one or more Guilded components and you are on your way!
 
 == LICENSE
 
