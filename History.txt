@@ -1,3 +1,8 @@
+= 0.2.7 2009-06-10
+
+* Changed the BrowserDetector to need to be instantiated to use.  No longer just static methods.
+
+
 = 0.2.6 2009-06-10
 
 * Added some more view helpers for the browser detector.

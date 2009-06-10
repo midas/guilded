@@ -5,6 +5,10 @@ module Guilded
   #
   class BrowserDetector
     
+    def initialize( request )
+      @request = request
+    end
+    
     # Returns true if the browser matches the options ent in, otherwise returns false.
     #
     # === Request
@@ -14,15 +18,14 @@ module Guilded
     # * +:name+ - The name of the browser.  For example 'ie'.
     # * +:version+ - The version of the browser.  For example '7'.
     #
-    def self.browser_is?( request, options={} )
-      #name = name.to_s.strip
+    def browser_is?( options={} )
       name = options[:name].to_s.strip
       version = options[:version].to_s.strip
 
-      return true if browser_name( request ) == name
-      return true if name == 'mozilla' && browser_name( request ) == 'gecko'
-      return true if name == 'ie' && browser_name( request ).index( 'ie' )
-      return true if name == 'webkit' && browser_name( request ) == 'safari'
+      return true if browser_name == name
+      return true if name == 'mozilla' && browser_name == 'gecko'
+      #return true if name == 'ie' && browser_name.index( 'ie' )
+      return true if name == 'webkit' && browser_name == 'safari'
     end
 
     # Returns the name of the browser that is making this request.  For example 'ie'.
@@ -30,9 +33,9 @@ module Guilded
     # === Request
     # * +request+ - The request object.
     #
-    def self.browser_name( request )
+    def browser_name
       @browser_name ||= begin
-        ua = request.env['HTTP_USER_AGENT']
+        ua = @request.env['HTTP_USER_AGENT']
         if ua.nil?
           'unknown'
         else
@@ -40,9 +43,9 @@ module Guilded
 
           if ua.index( 'msie' ) && !ua.index( 'opera' ) && !ua.index( 'webtv' )
             if ua.index( 'windows ce' )
-              'ie' + ua[ua.index( 'msie' ) + 5].chr + '_ce'
+              'ie' + '_ce' #+ ua[ua.index( 'msie' ) + 5].chr 
             else
-              'ie' + ua[ua.index( 'msie' ) + 5].chr
+              'ie' # + ua[ua.index( 'msie' ) + 5].chr
             end
           elsif ua.index( 'netscape' )
             'netscape'
@@ -70,8 +73,8 @@ module Guilded
     # === Request
     # * +request+ - The request object.
     #
-    def self.browser_full_name( request )
-      browser_name( request ) + browser_version( request )
+    def browser_full_name
+      browser_name + browser_version
     end
 
     # Returns the version of the browser that is making this request.  For example '7'.
@@ -79,26 +82,27 @@ module Guilded
     # === Request
     # * +request+ - The request object.
     #
-    def self.browser_version( request )
+    def browser_version
       @browser_version ||= begin
-        ua = request.env['HTTP_USER_AGENT'].downcase
+        ua = @request.env['HTTP_USER_AGENT'].downcase
 
-        if browser_name( request ) == 'opera'
+        if browser_name == 'opera'
           ua[ua.index( 'opera' ) + 6].chr
-        elsif browser_name( request ) == 'firefox'
-          ua[ua.index( 'firefox' ) + 8 ].chr
-        elsif browser_name( request ) == 'netscape'
+        elsif browser_name == 'firefox'
+          ua[ua.index( 'firefox' ) + 8].chr
+        elsif browser_name == 'netscape'
           ua[ua.index( 'netscape' ) + 9].chr
-        elsif browser_name( request ).index( 'ie' )
+        elsif browser_name.index( 'ie' )
           ua[ua.index( 'msie' ) + 5].chr
+        elsif browser_name.index( 'safari' )
+          ua[ua.index( 'version' ) + 8].chr
         else
           'unknown'
         end
-
       end
     end
     
-    def self.can_use_png?
+    def can_use_png?
       if browser_name.index( 'ie' ) == 0
   		  if browser_version.to_i < 7 
   				false
@@ -113,12 +117,12 @@ module Guilded
   	end
 
     def self.all_browsers
-      %W( ie7, ie6, opera, firefox, netscape, konqueror, safari )
+      %W( ie8, ie7, ie6, opera, firefox, netscape, konqueror, safari )
     end
 
     def self.all_mobile_browsers
-      %w( ie4_ce )
+      %w( ie_ce4 )
     end
-
+    
   end
 end
