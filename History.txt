@@ -1,3 +1,8 @@
+= 0.2.6 2009-06-10
+
+* Added some more view helpers for the browser detector.
+
+
 = 0.2.5 2009-06-10
 
 * Added BrowserDetector to assist with determining which browser is making a request.
