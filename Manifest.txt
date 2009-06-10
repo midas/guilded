@@ -5,6 +5,7 @@ README.rdoc
 Rakefile
 guilded.gemspec
 lib/guilded.rb
+lib/guilded/browser_detector.rb
 lib/guilded/component_def.rb
 lib/guilded/exceptions.rb
 lib/guilded/guilder.rb

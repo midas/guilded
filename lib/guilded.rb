@@ -1,6 +1,7 @@
 $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
+require 'guilded/browser_detector'
 require 'guilded/component_def'
 require 'guilded/guilder'
 require 'guilded/exceptions'
@@ -72,7 +73,7 @@ require 'guilded/rails/inactive_record/human_attribute_hint'
 #   <%= g_load_alerter :skin => 'blueish', :id => 'load_alerter' %>
 #
 module Guilded
-  VERSION = '0.2.4'
+  VERSION = '0.2.5'
 end
 
 ActionView::Base.send( :include, Guilded::Rails::ViewHelpers ) if defined?( ActionView )

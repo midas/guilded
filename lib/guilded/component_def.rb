@@ -1,5 +1,4 @@
 module Guilded
-    
   class ComponentDef
     
     attr_reader :kind, :options, :libs, :styles
@@ -22,5 +21,4 @@ module Guilded
     end
 
   end
-
 end

@@ -83,6 +83,20 @@ module Guilded
         end      
       end
       
+      # returns the name of the browser that is making this request.
+      #
+      def g_browser_name
+        Guilded::BrowserDetector.browser_name( request )
+      end
+      
+      def g_browser_version
+        Guilded::BrowserDetector.browser_version( request )
+      end
+      
+      def g_browser_is?( options={} )
+        Guilded::BrowserDetector.browser_is?( request, options )
+      end
+      
     end
   end
 end

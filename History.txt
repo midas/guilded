@@ -1,9 +1,15 @@
+= 0.2.5 2009-06-10
+
+* Added BrowserDetector to assist with determining which browser is making a request.
+
+
 = 0.2.4 2009-05-29
 
 * Added add_data method to the Guilder object allowing named data structures to be passed to the JavaScript 
   executing environment.
 * Added a jQuery event to the body DOM element called guildedInitialized.  To execute JavaScript code after all 
   Guilded components are intialized, simply bind to this event.
+
 
 = 0.2.0 2009-04-06
 
