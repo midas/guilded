@@ -66,6 +66,9 @@ The Guilded gem contains the framework to build Guilded components.
   these is found, it includes it, otherwise, it includes the version specified by the author in the view helper.  This is usually 
   an unpacked version of the file.
 
+=== Additional common utilities
+* Determine the browser making a request with the BrowserDetector class and related view helpers.
+
 
 == GUILDED COMPONENT PROJECTS
 
