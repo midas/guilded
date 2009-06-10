@@ -83,16 +83,30 @@ module Guilded
         end      
       end
       
-      # returns the name of the browser that is making this request.
+      # Returns the name of the browser that is making this request.  For example 'ie'.
       #
       def g_browser_name
         Guilded::BrowserDetector.browser_name( request )
       end
       
+      # Returns the version of the browser that is making this request.  For example '7'.
+      #
       def g_browser_version
         Guilded::BrowserDetector.browser_version( request )
       end
       
+      # Returns the browser name concatenated with the browser version.  for example, 'ie7'.
+      #
+      def g_browser_full_name
+        Guilded::BrowserDetector.browser_full_name( request )
+      end
+      
+      # Returns true if the browser matches the options ent in, otherwise returns false.
+      #
+      # === Options
+      # * +:name+ - The name of the browser.  For example 'ie'.
+      # * +:version+ - The version of the browser.  For example '7'.
+      #
       def g_browser_is?( options={} )
         Guilded::BrowserDetector.browser_is?( request, options )
       end
