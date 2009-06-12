@@ -5,7 +5,7 @@ module InactiveRecord
       # converted to 'Num employees' normally using <tt>human_attribute_name</tt>.  More descriptive text can be set. Example:
       #   attr_human_name 'num_employees' => 'Number of employees'
       def attr_human_hint(attributes) # :nodoc:
-        return unless table_exists?
+        #return unless table_exists?
 
         attributes.stringify_keys!
         write_inheritable_hash("attr_human_hint", attributes || {})

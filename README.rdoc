@@ -68,6 +68,9 @@ The Guilded gem contains the framework to build Guilded components.
 
 === Additional common utilities
 * Determine the browser making a request with the BrowserDetector class and related view helpers.
+* Extends ActiveRecord to have a attr_human_hint method.  This method works similar to the attr_human_name method except a hint
+  to use on forms, etc is being set.
+* Extends InactiveRecord (http://github.com/midas/inactive_record/tree/master) to include the attr_human_hint method.
 
 
 == GUILDED COMPONENT PROJECTS

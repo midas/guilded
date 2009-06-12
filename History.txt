@@ -1,3 +1,9 @@
+= 0.2.8 2009-06-12
+
+* Removed some code from the InactiveRecord:Base extension for human attrbiute hint that returns unless 
+  table_exists? as this does not make any sense for InactiveRecord.
+
+
 = 0.2.7 2009-06-10
 
 * Changed the BrowserDetector to need to be instantiated to use.  No longer just static methods.
