@@ -1,9 +1,6 @@
 module InactiveRecord
   class Base
     class <<self
-      # Allows alternate humanized versions of attributes to be set.  For example, an attribute such as 'num_employees' would be
-      # converted to 'Num employees' normally using <tt>human_attribute_name</tt>.  More descriptive text can be set. Example:
-      #   attr_human_name 'num_employees' => 'Number of employees'
       def attr_human_hint(attributes) # :nodoc:
         #return unless table_exists?
 

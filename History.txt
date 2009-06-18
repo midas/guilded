@@ -1,3 +1,8 @@
+= 0.2.9 2009-06-18
+
+* Added rescue code if the browser name or version fails.
+
+
 = 0.2.8 2009-06-12
 
 * Removed some code from the InactiveRecord:Base extension for human attrbiute hint that returns unless 

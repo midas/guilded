@@ -34,37 +34,43 @@ module Guilded
     # * +request+ - The request object.
     #
     def browser_name
-      @browser_name ||= begin
-        ua = @request.env['HTTP_USER_AGENT']
-        if ua.nil?
-          'unknown'
-        else
-          ua = ua.downcase  
-
-          if ua.index( 'msie' ) && !ua.index( 'opera' ) && !ua.index( 'webtv' )
-            if ua.index( 'windows ce' )
-              'ie' + '_ce' #+ ua[ua.index( 'msie' ) + 5].chr 
-            else
-              'ie' # + ua[ua.index( 'msie' ) + 5].chr
-            end
-          elsif ua.index( 'netscape' )
-            'netscape'
-          elsif ua.index( 'gecko/' ) 
-            'firefox'
-          elsif ua.index( 'opera' )
-            'opera'
-          elsif ua.index( 'konqueror' ) 
-            'konqueror'
-          elsif ua.index( 'applewebkit/' )
-            'safari'
-          elsif ua.index( 'mozilla/' )
-            'firefox'
-          elsif ua.index( 'firefox' )
-            'firefox'
-          else
+      begin
+        @browser_name ||= begin
+          ua = @request.env['HTTP_USER_AGENT']
+          if ua.nil?
             'unknown'
+          else
+            ua = ua.downcase  
+
+            if ua.index( 'msie' ) && !ua.index( 'opera' ) && !ua.index( 'webtv' )
+              if ua.index( 'windows ce' )
+                'ie' + '_ce' #+ ua[ua.index( 'msie' ) + 5].chr 
+              else
+                'ie' # + ua[ua.index( 'msie' ) + 5].chr
+              end
+            elsif ua.include?( 'chrome' )
+              'chrome'
+            elsif ua.include?( 'netscape' )
+              'netscape'
+            elsif ua.include?( 'gecko/' ) 
+              'firefox'
+            elsif ua.include?( 'opera' )
+              'opera'
+            elsif ua.include?( 'konqueror' ) 
+              'konqueror'
+            elsif ua.include?( 'applewebkit/' )
+              'safari'
+            elsif ua.include?( 'mozilla/' )
+              'firefox'
+            elsif ua.include?( 'firefox' )
+              'firefox'
+            else
+              'unknown'
+            end
           end
         end
+      rescue
+        'unknown'
       end
     end
     
@@ -83,22 +89,28 @@ module Guilded
     # * +request+ - The request object.
     #
     def browser_version
-      @browser_version ||= begin
-        ua = @request.env['HTTP_USER_AGENT'].downcase
+      begin
+        @browser_version ||= begin
+          ua = @request.env['HTTP_USER_AGENT'].downcase
 
-        if browser_name == 'opera'
-          ua[ua.index( 'opera' ) + 6].chr
-        elsif browser_name == 'firefox'
-          ua[ua.index( 'firefox' ) + 8].chr
-        elsif browser_name == 'netscape'
-          ua[ua.index( 'netscape' ) + 9].chr
-        elsif browser_name.index( 'ie' )
-          ua[ua.index( 'msie' ) + 5].chr
-        elsif browser_name.index( 'safari' )
-          ua[ua.index( 'version' ) + 8].chr
-        else
-          'unknown'
+          if browser_name == 'opera'
+            ua[ua.index( 'opera' ) + 6].chr
+          elsif browser_name == 'chrome'
+            ua[ua.index( 'chrome' ) + 7].chr
+          elsif browser_name == 'firefox'
+            ua[ua.index( 'firefox' ) + 8].chr
+          elsif browser_name == 'netscape'
+            ua[ua.index( 'netscape' ) + 9].chr
+          elsif browser_name.index( 'ie' )
+            ua[ua.index( 'msie' ) + 5].chr
+          elsif browser_name.index( 'safari' )
+            ua[ua.index( 'version' ) + 8].chr
+          else
+            '0'
+          end
         end
+      rescue
+        '0'
       end
     end
     
