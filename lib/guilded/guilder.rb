@@ -191,6 +191,7 @@ module Guilded
       @js_path = GUILDED_CONFIG[:js_path]
       @js_folder = GUILDED_CONFIG[:js_folder]
       @jquery_js = GUILDED_CONFIG[:jquery_js]
+      @mootools_js = GUILDED_CONFIG[:mootools_js]
       @jquery_folder = GUILDED_CONFIG[:jquery_folder] || 'jquery/'
       @guilded_js = 'guilded.min.js'
       @url_js = 'jquery-url.min.js'
