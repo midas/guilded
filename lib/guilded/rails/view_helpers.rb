@@ -1,7 +1,7 @@
 module Guilded
   module Rails
     module ViewHelpers
-   
+
       # Generates the JavaScript includes for each Guilded element that is used.  Also
       # generates the initGuildedElements function and includes a call to each GUIlded
       # elements Init method.
@@ -80,9 +80,9 @@ module Guilded
           stylesheet_link_tag( "/stylesheets/#{GUILDED_JS_FOLDER}#{GUILDED_NS}#{source.to_s}/#{skin}.css" )
         else
           ""
-        end      
+        end
       end
-      
+
       # Returns the name of the browser that is making this request.  For example 'ie'.  When using 
       # the browser detector in the contoller you may put a :g_browser_detector variabe in the session if 
       # you wish to keep the BrowserDetector from being instantiated more than once per request.
@@ -92,7 +92,7 @@ module Guilded
         @g_browser_detector ||= Guilded::BrowserDetector.new( request )
         @g_browser_detector.browser_name
       end
-      
+
       # Returns the version of the browser that is making this request.  For example '7'.  When using 
       # the browser detector in the contoller you may put a :g_browser_detector variabe in the session if 
       # you wish to keep the BrowserDetector from being instantiated more than once per request.
@@ -102,7 +102,7 @@ module Guilded
         @g_browser_detector ||= Guilded::BrowserDetector.new( request )
         @g_browser_detector.browser_version
       end
-      
+
       # Returns the browser name concatenated with the browser version.  for example, 'ie7'.  When using 
       # the browser detector in the contoller you may put a :g_browser_detector variabe in the session if 
       # you wish to keep the BrowserDetector from being instantiated more than once per request.
@@ -112,7 +112,7 @@ module Guilded
         @g_browser_detector ||= Guilded::BrowserDetector.new( request )
         @g_browser_detector.browser_full_name
       end
-      
+
       # Returns true if the browser matches the options ent in, otherwise returns false.  When using 
       # the browser detector in the contoller you may put a :g_browser_detector variabe in the session if 
       # you wish to keep the BrowserDetector from being instantiated more than once per request.
@@ -126,7 +126,7 @@ module Guilded
         @g_browser_detector ||= Guilded::BrowserDetector.new( request )
         @g_browser_detector.browser_is?( options )
       end
-      
+
     end
   end
 end

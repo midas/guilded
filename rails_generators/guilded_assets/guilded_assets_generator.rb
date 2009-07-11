@@ -14,6 +14,8 @@ class GuildedAssetsGenerator < Rails::Generator::Base
       m.file "jquery-1.3.2.min.js", "public/javascripts/jquery/jquery-1.3.2.min.js"
       m.file "jquery-url.js", "public/javascripts/jquery/jquery-url.js"
       m.file "jquery-url.min.js", "public/javascripts/jquery/jquery-url.min.js"
+      m.file "mootools-1.2.3.js", "public/javascripts/mootools/mootools-1.2.3.js"
+      m.file "mootools-1.2.3.min.js", "public/javascripts/mootools/mootools-1.2.3.min.js"
       m.file "reset-min.css", "public/stylesheets/reset-min.css"
     end
   end
