@@ -24,6 +24,8 @@ rails_generators/guilded_assets/templates/jquery-1.3.2.js
 rails_generators/guilded_assets/templates/jquery-1.3.2.min.js
 rails_generators/guilded_assets/templates/jquery-url.js
 rails_generators/guilded_assets/templates/jquery-url.min.js
+rails_generators/guilded_assets/templates/mootools-1.2.3.js
+rails_generators/guilded_assets/templates/mootools-1.2.3.min.js
 rails_generators/guilded_assets/templates/reset-min.css
 rails_generators/guilded_config/guilded_config_generator.rb
 rails_generators/guilded_config/templates/load_guilded_settings.rb
