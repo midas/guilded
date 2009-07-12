@@ -34,14 +34,24 @@ module Guilded
       # being that it adds the file to a sources array to be concatenated and included at the 
       # end of the page.
       #
-      # Utilizes the js_include_tag helper from Rails.
-      #
       def g_javascript_include_tag( *sources )
         g = Guilded::Guilder.instance
         defaults = nil
         if sources.include?( :defaults )
           defaults = ActionView::Helpers::AssetTagHelper::JAVASCRIPT_DEFAULT_SOURCES
           sources.delete( :defaults )
+        end
+        if sources.include?( :jquery )
+          sources.insert( 0, g.jquery_js ) unless sources.include?( g.jquery_js )
+          sources.delete( :jquery )
+        end
+        if sources.include?( :mootools )
+          unless sources.include?( g.mootools_js )
+            insert at = 0
+            insert at = 1 if( sources.include?( g.jquery_js ) )
+            sources.insert( insert_at, g.mootools_js )
+          end
+          sources.delete( :mootools )
         end
         if defaults
           g.combined_js_srcs.push( *(sources << defaults) )

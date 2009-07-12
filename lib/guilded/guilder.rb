@@ -62,6 +62,10 @@ module Guilded
     def add_data( name, data )
       @g_data_elements.merge!( name.to_sym => data )
     end
+    
+    def add_js_sources( *sources )
+      resolve_js_libs( *sources )
+    end
   
     def count #:nodoc:
       @g_elements.size
@@ -194,6 +198,7 @@ module Guilded
       @jquery_js = GUILDED_CONFIG[:jquery_js]
       @mootools_js = GUILDED_CONFIG[:mootools_js]
       @jquery_folder = GUILDED_CONFIG[:jquery_folder] || 'jquery/'
+      @mootools_folder = GUILDED_CONFIG[:mootools_folder] || 'mootools/'
       @guilded_js = 'guilded.min.js'
       @url_js = 'jquery-url.min.js'
       @css_path = GUILDED_CONFIG[:css_path]
@@ -209,6 +214,8 @@ module Guilded
       @url_js.freeze
       @jquery_js.freeze
       @jquery_folder.freeze
+      @mootols_js.freeze
+      @mootools_folder.freeze
       @guilded_js.freeze
       @css_folder.freeze
       @reset_css.freeze
@@ -261,7 +268,7 @@ module Guilded
     # 
     # If running development mode, it will try to remove any .pack, .min, or.compressed
     # parts fo the name to try and get the debug version of the library.  If it cannot 
-    # find the debug version of the file, it will just remain  what was initially provded.
+    # find the debug version of the file, it will just remain what was initially provded.
     #
     def resolve_js_libs( *libs ) #:nodoc: 
       if development?
