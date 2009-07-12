@@ -48,6 +48,7 @@ module Guilded
     def add( element, options={}, libs=[], styles=[] )
       raise Guilded::Exceptions::IdMissing.new unless options.has_key?( :id )
       raise Guilded::Exceptions::DuplicateElementId.new( options[:id] ) if @g_elements.has_key?( options[:id] )
+      @need_mootools = true if options[:mootools]
       @g_elements[ options[:id].to_sym ] = Guilded::ComponentDef.new( element, options, libs, styles )
     end
     
@@ -249,6 +250,7 @@ module Guilded
     #   a jQuery plugin, etc.
     #
     def combine_js_sources( component, libs=[] )  #:nodoc:
+      libs << @mootools_js if @need_mootools
       resolve_js_libs( *libs )
       
       comp_src = add_guilded_js_path( component )
@@ -274,9 +276,7 @@ module Guilded
           end
         end
       else
-        libs.each do |lib|
-          @combined_js_srcs.push( lib ) unless @combined_js_srcs.include?( lib )
-        end
+        libs.each { |lib| @combined_js_srcs.push( lib ) unless @combined_js_srcs.include?( lib ) }
       end
     end
     
