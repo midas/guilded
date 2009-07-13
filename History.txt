@@ -1,6 +1,11 @@
 = 0.3.0 2009-07-12
 
 * Added support for MooTools library.
+* Added :mootools option to the Guilder.add() method.  If true is passed into this option when adding a component, Guilded
+  will automatically add the mootools library to the libs collection so that the lib will be included in the assets the
+  page loads.
+* Updated the g_javascript_include_tag to resolve the :jquery and :mootools symbols to their respective libraries based
+  on the configuration of Guilded and the current running environment.
 
 
 = 0.2.9 2009-06-18

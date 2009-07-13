@@ -24,7 +24,7 @@ module Guilded
     
     GUILDED_NS = "guilded."
       
-    attr_reader :initialized_at
+    attr_reader :initialized_at, :jquery_js, :mootools_js
     
     def initialize #:nodoc:
       if defined?( GUILDED_CONFIG )
@@ -63,6 +63,9 @@ module Guilded
       @g_data_elements.merge!( name.to_sym => data )
     end
     
+    # Adds JavaScript sources to the libs collection by resolving them to the normal or min version
+    # based on the current running environment, development, production, etc.
+    #
     def add_js_sources( *sources )
       resolve_js_libs( *sources )
     end

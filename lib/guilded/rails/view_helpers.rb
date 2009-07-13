@@ -32,7 +32,12 @@ module Guilded
 
       # Creates a javascript include tag for a Guilded specific file.  The only difference
       # being that it adds the file to a sources array to be concatenated and included at the 
-      # end of the page.
+      # end of the page with the dependencies specified for the Guilded components used.
+      #
+      # To explicitly include the jQuery or MooTools libraries you can use :jquery and/or :mootools
+      # respectively.  If a component that uses either jQuery or MooTools is used on a page, there is
+      # no need to explicitly include the library, as it will be resolved as a dependency and only 
+      # included once.
       #
       def g_javascript_include_tag( *sources )
         g = Guilded::Guilder.instance
@@ -47,16 +52,16 @@ module Guilded
         end
         if sources.include?( :mootools )
           unless sources.include?( g.mootools_js )
-            insert at = 0
-            insert at = 1 if( sources.include?( g.jquery_js ) )
+            insert_at = 0
+            insert_at = 1 if( sources.include?( g.jquery_js ) )
             sources.insert( insert_at, g.mootools_js )
           end
           sources.delete( :mootools )
         end
         if defaults
-          g.combined_js_srcs.push( *(sources << defaults) )
+          g.add_js_sources( *(sources << defaults) )
         else
-          g.combined_js_srcs.push( *sources )
+          g.add_js_sources( *sources )
         end
         ''
       end
