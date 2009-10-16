@@ -2,6 +2,8 @@ module Guilded
   module Rails
     
     require 'active_support'
+    #require 'rubygems'
+    #gem 'activesupport', '2.3.2'
     
     # Common functionality that Rails Guilded components may need to use.
     #

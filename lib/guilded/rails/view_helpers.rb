@@ -104,7 +104,7 @@ module Guilded
       #
       def g_browser_name
         @g_browser_detector = session[:g_browser_detector] if respond_to?( :session )
-        @g_browser_detector ||= Guilded::BrowserDetector.new( request )
+        @g_browser_detector ||= Guilded::BrowserDetector.new( request.env['HTTP_USER_AGENT'] )
         @g_browser_detector.browser_name
       end
 
@@ -114,7 +114,7 @@ module Guilded
       #
       def g_browser_version
         @g_browser_detector = session[:g_browser_detector] if respond_to?( :session )
-        @g_browser_detector ||= Guilded::BrowserDetector.new( request )
+        @g_browser_detector ||= Guilded::BrowserDetector.new( request.env['HTTP_USER_AGENT'] )
         @g_browser_detector.browser_version
       end
 
@@ -124,7 +124,7 @@ module Guilded
       #
       def g_browser_full_name
         @g_browser_detector = session[:g_browser_detector] if respond_to?( :session )
-        @g_browser_detector ||= Guilded::BrowserDetector.new( request )
+        @g_browser_detector ||= Guilded::BrowserDetector.new( request.env['HTTP_USER_AGENT'] )
         @g_browser_detector.browser_full_name
       end
 
@@ -138,7 +138,7 @@ module Guilded
       #
       def g_browser_is?( options={} )
         @g_browser_detector = session[:g_browser_detector] if respond_to?( :session )
-        @g_browser_detector ||= Guilded::BrowserDetector.new( request )
+        @g_browser_detector ||= Guilded::BrowserDetector.new( request.env['HTTP_USER_AGENT'] )
         @g_browser_detector.browser_is?( options )
       end
 
