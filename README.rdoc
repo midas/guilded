@@ -135,7 +135,12 @@ Edit the settings file at config/initializers/load_guilded_settings.rb.  Change 
 you would like Guilded to be configured.  If you change where any file(s) are configured to be located, then also move 
 the respective file(s).
 
-Next you must make a call to the view helper to apply the CSS  It should be placed in your layout:
+
+== USAGE
+
+=== COMPONENT FRAMEWORK
+
+You must make a call to the view helper to apply the CSS  It should be placed in your layout:
 
   <%= g_apply_style %>
 
@@ -158,6 +163,48 @@ filter in your application controller:
   end
 
 Then install one or more Guilded components and you are on your way!
+
+=== BROWSER DETECTOR
+
+The browser detector uses the HTTP user agent string to determine which browser is making the current request.  The detector
+can determine the name, version, major version, minor version, build version and revision version of the current browser.
+
+If using Rails, there are several view helpers available that use the BrowserDetector: g_browser_name(), g_browser_version(),
+g_browser_full_name() and g_browser_is?().
+
+The following examples will assume Firefox 3.5.3 on OS/X is being used.  The user agent string for Firefox 3.5.3 on OS/X is:
+
+  Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3
+
+g_browser_name
+
+  <% if g_browser_name == 'firefox' %>
+    ...
+
+g_browser_version
+
+  <% if g_browser_version == '3.5.3' %>
+    ...
+
+g_browser_full_name
+
+  <%= g_browser_full_name # Outputs: Firefox 3.5.3 %>
+    ...
+
+g_browser_is?
+
+  <%= if g_browser_is?( :name => 'firefox', :version => '3.5.3' ) %>
+    ...
+
+  <%= if g_browser_is?( :name => 'firefox', :major_version => '3' ) %>
+    ...
+
+  <%= if g_browser_is?( :name => 'firefox', :major_version => 3, :minor_version => 5, :build_version => 3 ) %>
+    ...
+
+  <%= if g_browser_is?( :name => 'firefox', :major_version => 3, :minor_version => 5, :build_version => 3, :revision_version => 0 ) %>
+    ...
+
 
 == LICENSE
 
