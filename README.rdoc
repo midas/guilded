@@ -189,7 +189,6 @@ g_browser_version
 g_browser_full_name
 
   <%= g_browser_full_name # Outputs: Firefox 3.5.3 %>
-    ...
 
 g_browser_is?
 
