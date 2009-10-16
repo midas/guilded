@@ -24,6 +24,10 @@ class BrowserDetectorTest < Test::Unit::TestCase
       assert_equal Guilded::BrowserDetector.all_mobile_browsers.sort.join( ' ' ), "ie_ce4 iphone"
     end
     
+    should "have correct sample user agents for known browsers" do
+      @user_agents.each { |key, value| assert_equal value, Guilded::BrowserDetector.user_agents[key] }
+    end
+    
     context "when given Firefox 2.0 user agent" do
       setup do
         @detector = Guilded::BrowserDetector.new( @user_agents[:firefox2] )
