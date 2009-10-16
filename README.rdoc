@@ -199,10 +199,10 @@ g_browser_is?
   <%= if g_browser_is?( :name => 'firefox', :major_version => '3' ) %>
     ...
 
-  <%= if g_browser_is?( :name => 'firefox', :major_version => 3, :minor_version => 5, :build_version => 3 ) %>
+  <%= if g_browser_is?( :name => :firefox, :major_version => 3, :minor_version => 5, :build_version => 3 ) %>
     ...
 
-  <%= if g_browser_is?( :name => 'firefox', :major_version => 3, :minor_version => 5, :build_version => 3, :revision_version => 0 ) %>
+  <%= if g_browser_is?( :name => :firefox, :major_version => 3, :minor_version => 5, :build_version => 3, :revision_version => 0 ) %>
     ...
 
 
