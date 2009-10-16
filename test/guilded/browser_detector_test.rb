@@ -17,11 +17,11 @@ class BrowserDetectorTest < Test::Unit::TestCase
     end
     
     should "know all of its known browser ids" do
-      assert Guilded::BrowserDetector.all_browsers.sort.join( ' ' ) == "chrome firefox ie55 ie60 ie70 ie80 konqueror netscape opera safari"
+      assert_equal Guilded::BrowserDetector.all_browsers.sort.join( ' ' ), "chrome firefox ie55 ie60 ie70 ie80 konqueror netscape opera safari"
     end
     
     should "know all of its known mobile browser ids" do
-      assert Guilded::BrowserDetector.all_mobile_browsers.sort.join( ' ' ) == "ie_ce4 iphone"
+      assert_equal Guilded::BrowserDetector.all_mobile_browsers.sort.join( ' ' ), "ie_ce4 iphone"
     end
     
     context "when given Firefox 2.0 user agent" do
@@ -31,27 +31,27 @@ class BrowserDetectorTest < Test::Unit::TestCase
       end
       
       should "agree that the browser name is 'firefox'" do
-        assert @detector.browser_name == 'firefox'
+        assert_equal @detector.browser_name, 'firefox'
       end
       
       should "agree that the browser version is '2.0.0.17'" do
-        assert @detector.browser_version == '2.0.0.17'
+        assert_equal @detector.browser_version, '2.0.0.17'
       end
       
       should "agree that the browser major version is '2'" do
-        assert @detector.browser_version_major == '2'
+        assert_equal @detector.browser_version_major, '2'
       end
       
       should "agree that the browser minor version is '0'" do
-        assert @detector.browser_version_minor == '0'
+        assert_equal @detector.browser_version_minor, '0'
       end
       
       should "have a browser id of 'firefox20017'" do
-        assert @detector.browser_id == 'firefox20017'
+        assert_equal @detector.browser_id, 'firefox20017'
       end
       
       should "have a browser full name of 'Firefox 2.0.0.17'" do
-        assert @detector.browser_full_name == 'Firefox 2.0.0.17'
+        assert_equal @detector.browser_full_name, 'Firefox 2.0.0.17'
       end
       
       should "be able to use a png" do
@@ -86,27 +86,27 @@ class BrowserDetectorTest < Test::Unit::TestCase
       end
       
       should "agree that the browser name is 'firefox'" do
-        assert @detector.browser_name == 'firefox'
+        assert_equal @detector.browser_name, 'firefox'
       end
       
       should "agree that the browser version is '3.0.11'" do
-        assert @detector.browser_version == '3.0.11'
+        assert_equal @detector.browser_version, '3.0.11'
       end
       
       should "agree that the browser major version is '3'" do
-        assert @detector.browser_version_major == '3'
+        assert_equal @detector.browser_version_major, '3'
       end
       
       should "agree that the browser minor version is '0'" do
-        assert @detector.browser_version_minor == '0'
+        assert_equal @detector.browser_version_minor, '0'
       end
       
       should "have a browser id of 'firefox3011'" do
-        assert @detector.browser_id == 'firefox3011'
+        assert_equal @detector.browser_id, 'firefox3011'
       end
       
       should "have a browser full name of 'Firefox 3.0.11'" do
-        assert @detector.browser_full_name == 'Firefox 3.0.11'
+        assert_equal @detector.browser_full_name, 'Firefox 3.0.11'
       end
       
       should "be able to use a png" do
@@ -141,27 +141,27 @@ class BrowserDetectorTest < Test::Unit::TestCase
       end
       
       should "agree that the browser name is 'firefox'" do
-        assert @detector.browser_name == 'firefox'
+        assert_equal @detector.browser_name, 'firefox'
       end
       
       should "agree that the browser version is '3.5.3'" do
-        assert @detector.browser_version == '3.5.3'
+        assert_equal @detector.browser_version, '3.5.3'
       end
       
       should "agree that the browser major version is '3'" do
-        assert @detector.browser_version_major == '3'
+        assert_equal @detector.browser_version_major, '3'
       end
       
       should "agree that the browser minor version is '5'" do
-        assert @detector.browser_version_minor == '5'
+        assert_equal @detector.browser_version_minor, '5'
       end
       
       should "have a browser id of 'firefox353'" do
-        assert @detector.browser_id == 'firefox353'
+        assert_equal @detector.browser_id, 'firefox353'
       end
       
       should "have a browser full name of 'Firefox 3.5.3'" do
-        assert @detector.browser_full_name == 'Firefox 3.5.3'
+        assert_equal @detector.browser_full_name, 'Firefox 3.5.3'
       end
       
       should "be able to use a png" do
@@ -196,27 +196,27 @@ class BrowserDetectorTest < Test::Unit::TestCase
       end
       
       should "agree that the browser name is 'firefox'" do
-        assert @detector.browser_name == 'firefox'
+        assert_equal @detector.browser_name, 'firefox'
       end
       
       should "agree that the browser version is '3.5.3'" do
-        assert @detector.browser_version == '3.5.3'
+        assert_equal @detector.browser_version, '3.5.3'
       end
       
       should "agree that the browser major version is '3'" do
-        assert @detector.browser_version_major == '3'
+        assert_equal @detector.browser_version_major, '3'
       end
       
       should "agree that the browser minor version is '5'" do
-        assert @detector.browser_version_minor == '5'
+        assert_equal @detector.browser_version_minor, '5'
       end
       
       should "have a browser id of 'firefox353'" do
-        assert @detector.browser_id == 'firefox353'
+        assert_equal @detector.browser_id, 'firefox353'
       end
       
       should "have a browser full name of 'Firefox 3.5.3'" do
-        assert @detector.browser_full_name == 'Firefox 3.5.3'
+        assert_equal @detector.browser_full_name, 'Firefox 3.5.3'
       end
       
       should "be able to use a png" do
@@ -251,19 +251,27 @@ class BrowserDetectorTest < Test::Unit::TestCase
       end
       
       should "agree that the browser name is 'opera'" do
-        assert @detector.browser_name == 'opera'
+        assert_equal @detector.browser_name, 'opera'
       end
       
       should "agree that the browser version is '10.00'" do
-        assert @detector.browser_version == '10.00'
+        assert_equal @detector.browser_version, '10.00'
+      end
+      
+      should "agree that the browser major version is '10'" do
+        assert_equal @detector.browser_version_major, '10'
+      end
+      
+      should "agree that the browser minor version is '0'" do
+        assert_equal @detector.browser_version_minor, '0'
       end
        
       should "have a browser id of 'opera1000'" do
-        assert @detector.browser_id == 'opera1000'
+        assert_equal @detector.browser_id, 'opera1000'
       end
       
       should "have a browser full name of 'Opera 10.00'" do
-        assert @detector.browser_full_name == 'Opera 10.00'
+        assert_equal @detector.browser_full_name, 'Opera 10.00'
       end
        
       should "be able to use a png" do
@@ -298,19 +306,27 @@ class BrowserDetectorTest < Test::Unit::TestCase
       end
       
       should "agree that the browser name is 'ie'" do
-        assert @detector.browser_name == 'ie'
+        assert_equal @detector.browser_name, 'ie'
       end
       
       should "agree that the browser version is '5.5'" do
-        assert @detector.browser_version == '5.5'
+        assert_equal @detector.browser_version, '5.5'
+      end
+      
+      should "agree that the browser major version is '5'" do
+        assert_equal @detector.browser_version_major, '5'
+      end
+      
+      should "agree that the browser minor version is '5'" do
+        assert_equal @detector.browser_version_minor, '5'
       end
       
       should "have a browser id of 'ie55'" do
-        assert @detector.browser_id == 'ie55'
+        assert_equal @detector.browser_id, 'ie55'
       end
       
       should "have a browser full name of 'Internet Explorer 5.5'" do
-        assert @detector.browser_full_name == 'Internet Explorer 5.5'
+        assert_equal @detector.browser_full_name, 'Internet Explorer 5.5'
       end
       
       should "not be able to use a png" do
@@ -345,19 +361,27 @@ class BrowserDetectorTest < Test::Unit::TestCase
       end
       
       should "agree that the browser name is 'ie'" do
-        assert @detector.browser_name == 'ie'
+        assert_equal @detector.browser_name, 'ie'
       end
       
       should "agree that the browser version is '6.0'" do
-        assert @detector.browser_version == '6.0'
+        assert_equal @detector.browser_version, '6.0'
+      end
+      
+      should "agree that the browser major version is '6'" do
+        assert_equal @detector.browser_version_major, '6'
+      end
+      
+      should "agree that the browser minor version is '0'" do
+        assert_equal @detector.browser_version_minor, '0'
       end
       
       should "have a browser id of 'ie60'" do
-        assert @detector.browser_id == 'ie60'
+        assert_equal @detector.browser_id, 'ie60'
       end
       
       should "have a browser full name of 'Internet Explorer 6.0'" do
-        assert @detector.browser_full_name == 'Internet Explorer 6.0'
+        assert_equal @detector.browser_full_name, 'Internet Explorer 6.0'
       end
       
       should "not be able to use a png" do
@@ -392,19 +416,27 @@ class BrowserDetectorTest < Test::Unit::TestCase
       end
       
       should "agree that the browser name is 'ie'" do
-        assert @detector.browser_name == 'ie'
+        assert_equal @detector.browser_name, 'ie'
       end
       
       should "agree that the browser version is '7.0'" do
-        assert @detector.browser_version == '7.0'
+        assert_equal @detector.browser_version, '7.0'
+      end
+      
+      should "agree that the browser major version is '7'" do
+        assert_equal @detector.browser_version_major, '7'
+      end
+      
+      should "agree that the browser minor version is '0'" do
+        assert_equal @detector.browser_version_minor, '0'
       end
       
       should "have a browser id of 'ie70'" do
-        assert @detector.browser_id == 'ie70'
+        assert_equal @detector.browser_id, 'ie70'
       end
       
       should "have a browser full name of 'Internet Explorer 7.0'" do
-        assert @detector.browser_full_name == 'Internet Explorer 7.0'
+        assert_equal @detector.browser_full_name, 'Internet Explorer 7.0'
       end
       
       should "be able to use a png" do
@@ -439,19 +471,27 @@ class BrowserDetectorTest < Test::Unit::TestCase
       end
       
       should "agree that the browser name is 'ie'" do
-        assert @detector.browser_name == 'ie'
+        assert_equal @detector.browser_name, 'ie'
       end
       
       should "agree that the browser version is '8.0'" do
-        assert @detector.browser_version == '8.0'
+        assert_equal @detector.browser_version, '8.0'
+      end
+      
+      should "agree that the browser major version is '8'" do
+        assert_equal @detector.browser_version_major, '8'
+      end
+      
+      should "agree that the browser minor version is '0'" do
+        assert_equal @detector.browser_version_minor, '0'
       end
       
       should "have a browser id of 'ie80'" do
-        assert @detector.browser_id == 'ie80'
+        assert_equal @detector.browser_id, 'ie80'
       end
       
       should "have a browser full name of 'Internet Explorer 8.0'" do
-        assert @detector.browser_full_name == 'Internet Explorer 8.0'
+        assert_equal @detector.browser_full_name, 'Internet Explorer 8.0'
       end
       
       should "be able to use a png" do
