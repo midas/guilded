@@ -1,7 +1,7 @@
 = 1.0.0 2009-10-15
 
 * It's about time for a 1.0.0 release
-* Updated the browser detector to be more robust in its detection abilities
+* Updated the browser detector to be more robust in its detection abilities and provide more features
 
 
 = 0.3.0 2009-07-12
