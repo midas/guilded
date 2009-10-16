@@ -8,7 +8,8 @@ module Guilded
     attr_reader :ua
     
     def initialize( user_agent )
-      @ua = user_agent.downcase  
+      @ua = user_agent.downcase
+      @version_regex = /(\d*)\.(\d*)\.*(\d*)\.*(\d*)/
     end
     
     # Returns true if the browser matches the options ent in, otherwise returns false.
@@ -27,15 +28,26 @@ module Guilded
       version = options[:version]
       major_version = options[:major_version]
       minor_version = options[:minor_version]
-      return false if name.nil? && version.nil?
+      build_version = options[:build_version]
+      revision_version = options[:revision_version]
       
       name ||= self.browser_name
       version ||= self.browser_version
+      major_version ||= self.browser_version_major
+      minor_version ||= self.browser_version_minor
+      build_version ||= self.browser_version_build
+      revision_version ||= self.browser_version_revision
 
       name = name.to_s.strip
       version = version.to_s.strip
+      major_version = major_version.to_s.strip
+      minor_version = minor_version.to_s.strip
+      build_version = build_version.to_s.strip
+      revision_version = revision_version.to_s.strip
       
-      self.browser_name == name && self.browser_version == version
+      self.browser_name == name && self.browser_version == version && self.browser_version_major == major_version &&
+        self.browser_version_minor == minor_version #&& self.browser_version_build == build_version && 
+        #self.browser_version_revision == revision_version
     end
 
     # Returns the name of the browser that is making this request.  For example 'ie'.
@@ -92,17 +104,29 @@ module Guilded
         self.send( "resolve_version_for_#{self.browser_name}".to_sym )
       end
     end
-    
+
     def browser_version_major
-      parts = browser_version.split( '.' )
-      return parts[0].to_i.to_s unless parts.nil?
-      browser_version
+      match = @version_regex.match( browser_version )
+      return match[1].to_i.to_s unless match.nil? || match.size < 2
+      '0'
+    end
+
+    def browser_version_minor
+      match = @version_regex.match( browser_version )
+      return match[2].to_i.to_s unless match.nil? || match.size < 3
+      '0'
     end
     
-    def browser_version_minor
-      parts = browser_version.split( '.' )
-      return parts[1].to_i.to_s unless parts.nil? || parts.size < 2
-      browser_version
+    def browser_version_build
+      match = @version_regex.match( browser_version )
+      return match[3].to_i.to_s unless match.nil? || match.size < 4 || match[3].empty? || match[3].nil?
+      '0'
+    end
+    
+    def browser_version_revision
+      match = @version_regex.match( browser_version )
+      return match[4].to_i.to_s unless match.nil? || match.size < 5 || match[4].empty? || match[4].nil?
+      '0'
     end
     
     # Returns the browser name concatenated with the browser version.  for example, 'ie7'.
