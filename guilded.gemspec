@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["C. Jason Harrelson (midas)"]
-  s.date = %q{2009-10-16}
+  s.date = %q{2009-10-17}
   s.description = %q{Guilded intends to provide a toolset for creating and consuming reusable web components.  Currently, this problem domain is filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade gracefully and are not accessible.  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability and accessibility.  Guilded will achieve these goals by applying each technology at our disposal to do what it was intended.}
   s.email = %q{jason@lookforwardenterprises.com}
   s.extra_rdoc_files = [
@@ -50,15 +50,12 @@ Gem::Specification.new do |s|
      "script/console",
      "script/destroy",
      "script/generate",
-     "spec/guilded/component_def_spec.rb",
-     "spec/guilded/guilder_spec.rb",
-     "spec/guilded/rails/helpers_spec.rb",
-     "spec/guilded_spec.rb",
-     "spec/spec.opts",
-     "spec/spec_helper.rb",
      "tasks/rails.rake",
      "tasks/rspec.rake",
      "test/guilded/browser_detector_test.rb",
+     "test/guilded/component_def_test.rb",
+     "test/guilded/guilder_test.rb",
+     "test/guilded/rails/helpers_test.rb",
      "test/guilded/rails/view_helpers_test.rb",
      "test/guilded_test.rb",
      "test/test_helper.rb"
@@ -69,12 +66,10 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{A framework for building web based components centered around current web standards and best practices.}
   s.test_files = [
-    "spec/guilded/component_def_spec.rb",
-     "spec/guilded/guilder_spec.rb",
-     "spec/guilded/rails/helpers_spec.rb",
-     "spec/guilded_spec.rb",
-     "spec/spec_helper.rb",
-     "test/guilded/browser_detector_test.rb",
+    "test/guilded/browser_detector_test.rb",
+     "test/guilded/component_def_test.rb",
+     "test/guilded/guilder_test.rb",
+     "test/guilded/rails/helpers_test.rb",
      "test/guilded/rails/view_helpers_test.rb",
      "test/guilded_test.rb",
      "test/test_helper.rb"
