@@ -19,3 +19,12 @@ GUILDED_CONFIG = {
   :reset_css => "reset-min.css", # from the css_path
   :environment => 'development'
 }
+
+class Thing
+end
+class Owner
+end
+class Parent
+end
+class Lookup
+end

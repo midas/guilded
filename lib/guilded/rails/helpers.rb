@@ -18,6 +18,8 @@ module Guilded
           ar_obj = ar_obj_col_or_class
         elsif ar_obj_col_or_class.is_a?( Class )
           ar_obj = ar_obj_col_or_class.new
+        else
+          ar_obj = ar_obj_col_or_class
         end
         
         plural_ar_type = ar_obj.class.to_s.tableize

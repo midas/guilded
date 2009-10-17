@@ -28,10 +28,11 @@ module Guilded
     
     def initialize #:nodoc:
       if defined?( GUILDED_CONFIG )
-        configure_guilded
+        @config = GUILDED_CONFIG
       else
         raise Guilded::Exceptions::MissingConfiguration
       end
+      configure_guilded
       @initialized_at = Time.now
       @g_elements = Hash.new
       @g_data_elements = Hash.new
@@ -196,19 +197,19 @@ module Guilded
   protected
     
     def configure_guilded #:nodoc: 
-      @js_path = GUILDED_CONFIG[:js_path]
-      @js_folder = GUILDED_CONFIG[:js_folder]
-      @jquery_js = GUILDED_CONFIG[:jquery_js]
-      @mootools_js = GUILDED_CONFIG[:mootools_js]
-      @jquery_folder = GUILDED_CONFIG[:jquery_folder] || 'jquery/'
-      @mootools_folder = GUILDED_CONFIG[:mootools_folder] || 'mootools/'
+      @js_path = @config[:js_path]
+      @js_folder = @config[:js_folder]
+      @jquery_js = @config[:jquery_js]
+      @mootools_js = @config[:mootools_js]
+      @jquery_folder = @config[:jquery_folder] || 'jquery/'
+      @mootools_folder = @config[:mootools_folder] || 'mootools/'
       @guilded_js = 'guilded.min.js'
       @url_js = 'jquery-url.min.js'
-      @css_path = GUILDED_CONFIG[:css_path]
-      @css_folder = GUILDED_CONFIG[:css_folder]
-      @reset_css = GUILDED_CONFIG[:reset_css]
-      #@do_reset_css = GUILDED_CONFIG[:do_reset_css]
-      @env = GUILDED_CONFIG[:environment]
+      @css_path = @config[:css_path]
+      @css_folder = @config[:css_folder]
+      @reset_css = @config[:reset_css]
+      #@do_reset_css = @config[:do_reset_css]
+      @env = @config[:environment]
       @env ||= :production
       @js_path.freeze
       @css_path.freeze
