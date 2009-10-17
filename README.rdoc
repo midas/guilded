@@ -12,7 +12,7 @@ Guilded intends to provide a toolset for creating and consuming reusable web com
 filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade gracefully and 
 are not accessible.  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability 
 and accessibility.  Guilded will achieve these goals by applying each technology at our disposal (HTML, CSS and JavaScript) to do 
-what it was intended.  
+as it was intended. 
 
 XHTML will be employed for content.  CSS used for layout and styling.  Behavior will be added to a component with JavaScript 
 through progressive enhancement.  The user will have the best experience with a Guilded component when CSS and JavaScript are 
