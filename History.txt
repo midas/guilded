@@ -1,3 +1,8 @@
+= 1.0.1 2009-10-19
+
+* Moved the browser detector to its own Gem.
+
+
 = 1.0.0 2009-10-15
 
 * It's about time for a 1.0.0 release
