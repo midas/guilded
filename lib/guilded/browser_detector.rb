@@ -176,7 +176,12 @@ module Guilded
         :firefox3 => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.0.11) Gecko/2009060214 Firefox/3.0.11',
         :firefox35 => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3',
         :firefox35win => 'Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)',
-        :opera10 => 'Opera/9.80 (Macintosh; Intel Mac OS X; U; en) Presto/2.2.15 Version/10.00'
+        :opera10 => 'Opera/9.80 (Macintosh; Intel Mac OS X; U; en) Presto/2.2.15 Version/10.00',
+        :safari403 => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_1; en-US) AppleWebKit/532.2 (KHTML, like Gecko) Chrome/4.0.221.8 Safari/532.2',
+        :iphone3 => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_1 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7C144 Safari/528.16',
+        :iphone2 => 'Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A535b Safari/419.3',
+        :chrome3 => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.27 Safari/532.0',
+        :chrome4 => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_1; en-US) AppleWebKit/532.2 (KHTML, like Gecko) Chrome/4.0.221.8 Safari/532.2'
       }
     end
     
@@ -201,6 +206,18 @@ module Guilded
       return match.nil? ? '0' : match[2]
     end
     
+    def resolve_version_for_safari
+      match = /.* safari\/(.*)/.match( @ua )
+      rev = match.nil? ? 0 : match[1]
+      return case rev
+        when '528.16' then '4.0.0'
+        when '530.18' then '4.0.1'
+        when '530.19' then '4.0.2'
+        when '531.9', '532.2' then '4.0.3'
+        else '0.0.0.0'
+      end
+    end
+    
     def browser_full_name_for_ie
       "Internet Explorer #{browser_version}"
     end
@@ -213,5 +230,8 @@ module Guilded
       "Opera #{browser_version}"
     end
     
+    def browser_full_name_for_safari
+      "Safari #{browser_version}"
+    end
   end
 end
