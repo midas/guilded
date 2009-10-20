@@ -37,11 +37,3 @@ class View
   end
 end
 View.send( :include, Guilded::Rails::ViewHelpers )
-
-class Request
-  attr_accessor :env
-  
-  def initialize
-    @env = { 'HTTP_USER_AGENT' => Guilded::BrowserDetector.user_agents[:firefox35] }
-  end
-end

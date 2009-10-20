@@ -10,6 +10,7 @@ begin
     gem.email = "jason@lookforwardenterprises.com"
     gem.homepage = "http://github.com/midas/guilded"
     gem.authors = ["C. Jason Harrelson (midas)"]
+    gem.add_development_dependency "shoulda", ">= 2.10.2"
     gem.add_dependency "activesupport", ">= 2.0.2"
   end
   Jeweler::GemcutterTasks.new
