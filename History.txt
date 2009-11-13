@@ -1,3 +1,8 @@
+= 1.0.2 2009-11-13
+
+* Fixed issue with human_attribute_name override not accepting an options hash.  Was breaking remarkable gem.
+
+
 = 1.0.1 2009-10-19
 
 * Moved the browser detector to its own Gem.
