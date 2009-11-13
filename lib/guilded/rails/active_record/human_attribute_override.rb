@@ -21,7 +21,7 @@ module ActiveRecord
 
       # Transforms attribute key names into a more humane format, such as "First name" instead of "first_name". Example:
       #   Person.human_attribute_name("first_name") # => "First name"
-      def human_attribute_name(attribute_key_name) #:nodoc:
+      def human_attribute_name(attribute_key_name, options={}) #:nodoc:
         (read_inheritable_attribute("attr_human_name") || {})[attribute_key_name.to_s] || attribute_key_name.to_s.humanize.titleize
       end
     end
