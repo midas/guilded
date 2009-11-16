@@ -1,4 +1,4 @@
 module Guilded
-  module Rails
+  module Rails    
   end
 end
