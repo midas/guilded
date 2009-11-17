@@ -1,3 +1,8 @@
+= 1.0.3 2009-11-16
+
+* The reset_guilded filter is now automatically set up in ActionController.
+
+
 = 1.0.2 2009-11-13
 
 * Fixed issue with human_attribute_name override not accepting an options hash.  Was breaking remarkable gem.

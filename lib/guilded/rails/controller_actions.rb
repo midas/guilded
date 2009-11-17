@@ -6,7 +6,7 @@ module Guilded
         base.instance_eval do
           before_filter :reset_guilded
         end
-        base.include( InstanceMethods )
+        base.send( :include, InstanceMethods )
       end
 
       module InstanceMethods

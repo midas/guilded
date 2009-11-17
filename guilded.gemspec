@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
      "lib/guilded/rails.rb",
      "lib/guilded/rails/active_record/human_attribute_hint.rb",
      "lib/guilded/rails/active_record/human_attribute_override.rb",
+     "lib/guilded/rails/controller_actions.rb",
      "lib/guilded/rails/helpers.rb",
      "lib/guilded/rails/inactive_record/human_attribute_hint.rb",
      "lib/guilded/rails/view_helpers.rb",

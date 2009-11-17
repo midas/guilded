@@ -149,8 +149,8 @@ do not have to include it in every template):
 
   <%= g_apply_behavior %>
 
-You also must reset the Guilded singleton that manages everything after each rendering.  The best way to do this is a before 
-filter in your application controller:
+A before filter is automatically set up in your application controller to reset the Guilded singleton that manages 
+everything after each rendering.  The code looks like this:
 
   before_filter :reset_guilded
 	
@@ -162,7 +162,9 @@ filter in your application controller:
     Guilded::Guilder.instance.reset!
   end
 
-Then install one or more Guilded components and you are on your way!
+You may want to opt out of this before filter in actions that do not use a layout for efficiency.
+
+Next, install one or more Guilded components and you are on your way!
 
 
 == LICENSE
