@@ -6,8 +6,9 @@ module Guilded
   
   # Guilder is the worker for the entire Guilded framework.  It collects all of the necessary components for a page
   # through its add() method.  When the g_apply_behavior() method is called at the end of a page, the Guilder writes
-  # HTML to include all of the necessary asset files (caching them in production).  It also writes s JavaScript initialization
-  # function and fires the initialization function on page load.  
+  # HTML to include all of the necessary asset files (caching them in production).  It also writes a JavaScript initialization
+  # function and fires the initialization function on page load and a before and after initialization callback allowing for 
+  # custom initializtion to occur.
   #
   # This initialization function calls the initialization function for each Guilded component that was added to the current 
   # page.  For example, if a Guilded component named 'g_load_alerter' was added to a page, the Guilder would include this line 
