@@ -4,6 +4,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 require 'guilded/component_def'
 require 'guilded/guilder'
 require 'guilded/exceptions'
+require 'guilded/rails/controller_actions'
 require 'guilded/rails/helpers'
 require 'guilded/rails/view_helpers'
 require 'guilded/rails/active_record/human_attribute_hint'
