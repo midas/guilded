@@ -1,3 +1,8 @@
+= 1.0.4 2010-01-04
+
+* Fixed a bug with a file include to make guilded work with the bundler gem.
+
+
 = 1.0.3 2009-11-16
 
 * The reset_guilded filter is now automatically set up in ActionController.
