@@ -206,11 +206,43 @@ module Guilded
       @g_elements.each_value do |defi|
         #TODO get stylesheet (skin) stuff using rails caching
         combine_css_sources( defi.kind, defi.options[:skin], defi.styles ) unless defi.exclude_css?
-
+        
         # Combine all JavaScript sources so that the caching option can be used on
         # the javascript_incldue_tag helper.
         combine_js_sources( defi.kind, defi.libs ) unless defi.exclude_js?
       end
+    end
+    
+    def jquery_js
+      @config[:jquery_js]
+    end
+    
+    def jquery_remote_url
+      @config[:jquery_remote_url]
+    end
+    
+    def use_remote_jquery
+      @config[:use_remote_jquery]
+    end
+    
+    def app_root
+      @config[:app_root]
+    end
+    
+    def environment
+      @config[:environment]
+    end
+    
+    def development? #:nodoc: 
+      environment.to_sym == :development
+    end
+    
+    def production? #:nodoc: 
+      environment.to_sym == :production
+    end
+    
+    def test? #:nodoc: 
+      environment.to_sym == :test
     end
     
   protected
@@ -242,7 +274,7 @@ module Guilded
       @css_folder.freeze
       @reset_css.freeze
       @env.freeze
-    end
+    end    
     
     # Adds the Guilded reset CSS file and the guilded.js and jQuery files to the respective sources
     # collections.
@@ -250,6 +282,7 @@ module Guilded
     def init_sources #:nodoc: 
       @css_temp_hold[:reset] << "#{@reset_css}" unless @reset_css.nil? || @reset_css.empty?
       resolve_js_libs( "#{@jquery_js}", "#{@jquery_folder}#{@url_js}", "#{@js_folder}#{@guilded_js}" )
+      #TODO include the jQuery lib from Google server in production
     end
     
     # Helper method that takes the libs and component specific js files and puts them
@@ -281,7 +314,7 @@ module Guilded
         # Try to use an unpacked or unminimized version
         libs.each do |lib|
           debug_lib = lib.gsub( /.pack/, '' ).gsub( /.min/, '' ).gsub( /.compressed/, '' )
-          path = "#{RAILS_ROOT}/public/javascripts/#{debug_lib}"
+          path = "#{app_root}/public/javascripts/#{debug_lib}"
           if File.exist?( path )
             @combined_js_srcs.push( debug_lib ) unless @combined_js_srcs.include?( debug_lib )
           else
@@ -342,18 +375,5 @@ module Guilded
       path = "#{@css_path}#{part}"
       File.exists?( path ) ? part : ''
     end
-    
-    def development? #:nodoc: 
-      @env.to_sym == :development
-    end
-    
-    def production? #:nodoc: 
-      @env.to_sym == :production
-    end
-    
-    def test? #:nodoc: 
-      @env.to_sym == :test
-    end
-    
   end
 end

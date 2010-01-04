@@ -1,3 +1,13 @@
+= 1.0.10 2010-04-22
+
+* Added option to allow for serving jQuery lib from a remote asset server (ie. Google).
+
+
+= 1.0.9 2010-04-16
+
+* Updated the Rails Guilded initializer template to use Rails.root. 
+
+
 = 1.0.8 2010-04-16
 
 * Updated the Rails Guilded initializer to get rid of deprecated RAILS_ROOT in favor of Rails.root.

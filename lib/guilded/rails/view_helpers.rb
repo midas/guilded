@@ -22,8 +22,19 @@ module Guilded
       def g_apply_includes
         g = Guilded::Guilder.instance
         g.generate_asset_lists
+        
+        # CSS
         self.output_buffer.sub!( /<!-- guilded.styles -->/, stylesheet_link_tag( g.combined_css_srcs, :cache => "cache/#{g.css_cache_name}" ) )
-        javascript_include_tag( g.combined_js_srcs, :cache => "cache/#{g.js_cache_name}" )
+
+        # JavaScript
+        if g.production? && g.use_remote_jquery
+          js_groups = g.combined_js_srcs.partition { |src| src == g.jquery_js }
+          output = javascript_include_tag( g.jquery_remote_url )
+          output << javascript_include_tag( js_groups[1], :cache => "cache/#{g.js_cache_name}" ) unless js_groups[1].nil?
+        else
+          output = javascript_include_tag( g.combined_js_srcs, :cache => "cache/#{g.js_cache_name}" )
+        end
+        output
       end
       
       def g_apply_style
