@@ -35,11 +35,12 @@ module Guilded
       end
       configure_guilded
       @initialized_at = Time.now
-      @g_elements = Hash.new
-      @g_data_elements = Hash.new
-      @combined_js_srcs = Array.new
-      @combined_css_srcs = Array.new
-      @assets_combined = false
+      @g_elements = {}
+      @g_data_elements = {}
+      @combined_js_srcs = []
+      @combined_css_srcs = []
+      @css_temp_hold = { :pre => [], :post => [], :components => [], :reset => [] }
+      @valid_css_positions = @css_temp_hold.keys
       # Make sure that the css reset file is first so that other files can override the reset,
       # unless the user specified no reset to be included.
       init_sources
@@ -70,6 +71,10 @@ module Guilded
     #
     def add_js_sources( *sources )
       resolve_js_libs( *sources )
+    end
+
+    def add_css_source( src, position=:post )
+      @css_temp_hold[position.to_sym] << src unless @css_temp_hold[position.to_sym].include?( src )
     end
   
     def count #:nodoc:
@@ -103,14 +108,16 @@ module Guilded
     # The collection of JavaScript assets for the current Guilded component set.
     #
     def combined_js_srcs
-      #generate_asset_lists unless @assets_combined
       @combined_js_srcs
     end
     
     # The collection of CSS assets for the current Guilded component set.
     #
     def combined_css_srcs
-      #generate_asset_lists unless @assets_combined
+      @css_temp_hold[:reset].each { |src| @combined_css_srcs << src }
+      @css_temp_hold[:pre].each { |src| @combined_css_srcs << src }
+      @css_temp_hold[:components].each { |src| @combined_css_srcs << src }
+      @css_temp_hold[:post].each { |src| @combined_css_srcs << src }
       @combined_css_srcs
     end
     
@@ -120,7 +127,8 @@ module Guilded
       @combined_css_srcs.clear
       @combined_js_srcs.clear
       @g_elements.clear
-      @assets_combined = false
+      @css_temp_hold = { :pre => [], :post => [], :components => [], :reset => [] }
+      @valid_css_positions = @css_temp_hold.keys
       init_sources
       @default_css_count = @combined_css_srcs.size
       @default_js_count = @combined_js_srcs.size
@@ -139,7 +147,7 @@ module Guilded
     #
     def apply #:nodoc:
       to_init = ""
-      generate_asset_lists unless @assets_combined
+      generate_asset_lists #unless @assets_combined
       @combined_css_srcs.each { |css| to_init << "<link href=\"/stylesheets/#{css}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />" }
       @combined_js_srcs.each { |js| to_init << "<script type=\"text/javascript\" src=\"/javascripts/#{js}\"></script>" }
       to_init << generate_javascript_init
@@ -174,12 +182,11 @@ module Guilded
     # and shorter string.
     #
     def css_cache_name
-      generate_css_cache_name( @combined_css_srcs )
+      name = generate_css_cache_name( @combined_css_srcs )
+      name
     end
     
     def generate_js_cache_name( sources ) #:nodoc: 
-      generate_asset_lists unless @assets_combined
-      #return"#{controller.class.to_s.underscore}_#{controller.action_name}" if development?
       sorted_srcs = sources.sort
       stripped_srcs = sorted_srcs.map { |src| src.gsub( /.js/, '' ).gsub( /\//, '_') }
       joined = stripped_srcs.join( "+" )
@@ -187,12 +194,24 @@ module Guilded
     end
     
     def generate_css_cache_name( sources ) #:nodoc:
-      generate_asset_lists unless @assets_combined
-      #return "#{controller.class.to_s.underscore}_#{controller.action_name}" if development?
       sorted_srcs = sources.sort
       stripped_srcs = sorted_srcs.map { |src| src.gsub( /.css/, '' ).gsub( /\//, '_') }
       joined = stripped_srcs.join( "+" )
       "#{Digest::MD5.hexdigest( joined )}"
+    end
+
+    # Combines all JavaScript and CSS files into lists to include based on what Guilded components are on
+    # the current page.
+    #
+    def generate_asset_lists #:nodoc:
+      @g_elements.each_value do |defi|
+        #TODO get stylesheet (skin) stuff using rails caching
+        combine_css_sources( defi.kind, defi.options[:skin], defi.styles ) unless defi.exclude_css?
+
+        # Combine all JavaScript sources so that the caching option can be used on
+        # the javascript_incldue_tag helper.
+        combine_js_sources( defi.kind, defi.libs ) unless defi.exclude_js?
+      end
     end
     
   protected
@@ -209,7 +228,6 @@ module Guilded
       @css_path = @config[:css_path]
       @css_folder = @config[:css_folder]
       @reset_css = @config[:reset_css]
-      #@do_reset_css = @config[:do_reset_css]
       @env = @config[:environment]
       @env ||= :production
       @js_path.freeze
@@ -224,7 +242,6 @@ module Guilded
       @guilded_js.freeze
       @css_folder.freeze
       @reset_css.freeze
-      #@do_reset_css.freeze
       @env.freeze
     end
     
@@ -232,23 +249,8 @@ module Guilded
     # collections.
     #
     def init_sources #:nodoc: 
-      @combined_css_srcs << "#{@reset_css}" unless @reset_css.nil? || @reset_css.empty?
+      @css_temp_hold[:reset] << "#{@reset_css}" unless @reset_css.nil? || @reset_css.empty?
       resolve_js_libs( "#{@jquery_js}", "#{@jquery_folder}#{@url_js}", "#{@js_folder}#{@guilded_js}" )
-    end
-    
-    # Combines all JavaScript and CSS files into lists to include based on what Guilded components are on 
-    # the current page.
-    #
-    def generate_asset_lists #:nodoc: 
-      @assets_combined = true
-      @g_elements.each_value do |defi|
-        #TODO get stylesheet (skin) stuff using rails caching
-        combine_css_sources( defi.kind, defi.options[:skin], defi.styles ) unless defi.exclude_css?
-
-        # Combine all JavaScript sources so that the caching option can be used on
-        # the javascript_incldue_tag helper.
-        combine_js_sources( defi.kind, defi.libs ) unless defi.exclude_js?
-      end
     end
     
     # Helper method that takes the libs and component specific js files and puts them
@@ -323,16 +325,16 @@ module Guilded
     def combine_css_sources( component, skin, styles=[] ) #:nodoc: 
       # Get all of this components defined external styles
       styles.each do |style|
-        @combined_css_srcs.push( style ) unless @combined_css_srcs.include?( style )
+        @css_temp_hold[:components].push( style ) unless @css_temp_hold[:components].include?( style )
       end
       
       #Get the default or guilded skin styles for this component
       comp_src = add_guilded_css_path( component, skin )
-      @combined_css_srcs.push( comp_src ) unless @combined_css_srcs.include?( comp_src ) || comp_src.empty?
+      @css_temp_hold[:components].push( comp_src ) unless @css_temp_hold[:components].include?( comp_src ) || comp_src.empty?
       user_src = add_guilded_css_path( component, "user" )
-      @combined_css_srcs.push( user_src ) unless @combined_css_srcs.include?( user_src ) || user_src.empty?
+      @css_temp_hold[:components].push( user_src ) unless @css_temp_hold[:components].include?( user_src ) || user_src.empty?
       skin_user_src = add_guilded_css_path( component, "#{skin || 'default'}_user" )
-      @combined_css_srcs.push( skin_user_src ) unless @combined_css_srcs.include?( skin_user_src ) || skin_user_src.empty?
+      @css_temp_hold[:components].push( skin_user_src ) unless @css_temp_hold[:components].include?( skin_user_src ) || skin_user_src.empty?
     end
     
     def add_guilded_css_path( source, skin ) #:nodoc: 

@@ -1,3 +1,8 @@
+= 1.0.5 2010-01-21
+
+* Gave css inclusion a :position option allowing for positioning before or after the component(s) css.
+
+
 = 1.0.4 2010-01-04
 
 * Fixed a bug with a file include to make guilded work with the bundler gem.

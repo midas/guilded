@@ -11,9 +11,11 @@ module Guilded
       # call to g_apply_behavior will not output anything.
       #
       def g_apply_behavior
-        self.output_buffer.sub!( /<!-- guilded.styles -->/, stylesheet_link_tag( Guilded::Guilder.instance.combined_css_srcs, :cache => "cache/#{Guilded::Guilder.instance.css_cache_name}" ) )
-        html = javascript_include_tag( Guilded::Guilder.instance.combined_js_srcs, :cache => "cache/#{Guilded::Guilder.instance.js_cache_name}" )
-        html << Guilded::Guilder.instance.generate_javascript_init
+        g = Guilded::Guilder.instance
+        g.generate_asset_lists
+        self.output_buffer.sub!( /<!-- guilded.styles -->/, stylesheet_link_tag( g.combined_css_srcs, :cache => "cache/#{g.css_cache_name}" ) )
+        html = javascript_include_tag( g.combined_js_srcs, :cache => "cache/#{g.js_cache_name}" )
+        html << g.generate_javascript_init
         html
       end
       
@@ -24,11 +26,11 @@ module Guilded
       # Generates the base javascript includes, if they have not alreay been included.
       #
       # def g_includes
-      #         return "" if @base_included
-      #         @base_included = true
-      #         javascript_include_tag( 'jquery/jquery-1.2.6.min.js' ) +
-      #           "<script type=\"text/javascript\">$j = jQuery.noConflict(); g={};</script>"
-      #       end
+      #   return "" if @base_included
+      #   @base_included = true
+      #   javascript_include_tag( 'jquery/jquery-1.2.6.min.js' ) +
+      #     "<script type=\"text/javascript\">$j = jQuery.noConflict(); g={};</script>"
+      # end
 
       # Creates a javascript include tag for a Guilded specific file.  The only difference
       # being that it adds the file to a sources array to be concatenated and included at the 
@@ -66,8 +68,8 @@ module Guilded
         ''
       end
 
-      # Written to replace the Rails stylesheet_link_tag helper.  Although the syntax
-      # is exactly the same, the method works a little differently.
+      # Replaces the Rails stylesheet_link_tag helper if you wnat Guilded to manage CSS for you.  
+      # Although the syntax is exactly the same, the method works a little differently.
       # 
       # This helper adds the stylesheet(s) to a collection to be renderred out together 
       # with all the guilded componenets stylesheets.  This allows the stylesheets passed 
@@ -76,16 +78,15 @@ module Guilded
       # The helper will ensure that these stylesheets are included after Guilded's reset
       # stylesheet and before guilded's component's stylesheets so that they can override any 
       # resets, etc and not override any guilded components styles.
+      
+      # *options*
+      # :position The place to position the css. pre for before the component's css or post for after. 
+      #    Defaults to post.
       #
       def g_stylesheet_link_tag( *sources )
-        options = sources.extract_options!
-        g = Guilded::Guilder.instance
-        
-        if options[:ensure_primary]
-          g.inject_css( *sources )
-        else
-          g.combined_css_srcs.push( *sources )
-        end
+        options = sources.extract_options! || {}
+        options[:position] ||= :post
+        sources.each { |src| Guilded::Guilder.instance.add_css_source( src, options[:position] ) }
         ''
       end
 
