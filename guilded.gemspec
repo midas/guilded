@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{guilded}
-  s.version = "1.0.5"
+  s.version = "1.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["C. Jason Harrelson (midas)"]
-  s.date = %q{2010-01-21}
+  s.date = %q{2010-02-18}
   s.description = %q{Guilded intends to provide a toolset for creating and consuming reusable web components.  Currently, this problem domain is filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade gracefully and are not accessible (in most cases).  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability and accessibility.  Guilded will achieve these goals by applying each technology at our disposal (HTML, CSS and JavaScript) to do as it was intended.}
   s.email = %q{jason@lookforwardenterprises.com}
   s.extra_rdoc_files = [
@@ -22,6 +22,20 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "guilded.gemspec",
+     "lib/generators/guilded_assets/guilded_assets_generator.rb",
+     "lib/generators/guilded_assets/templates/guilded.js",
+     "lib/generators/guilded_assets/templates/guilded.min.js",
+     "lib/generators/guilded_assets/templates/jquery/jquery-1.2.6.js",
+     "lib/generators/guilded_assets/templates/jquery/jquery-1.2.6.min.js",
+     "lib/generators/guilded_assets/templates/jquery/jquery-1.3.2.js",
+     "lib/generators/guilded_assets/templates/jquery/jquery-1.3.2.min.js",
+     "lib/generators/guilded_assets/templates/jquery/jquery-url.js",
+     "lib/generators/guilded_assets/templates/jquery/jquery-url.min.js",
+     "lib/generators/guilded_assets/templates/mootools/mootools-1.2.3.js",
+     "lib/generators/guilded_assets/templates/mootools/mootools-1.2.3.min.js",
+     "lib/generators/guilded_assets/templates/reset-min.css",
+     "lib/generators/guilded_config/guilded_config_generator.rb",
+     "lib/generators/guilded_config/templates/load_guilded_settings.rb",
      "lib/guilded.rb",
      "lib/guilded/component_def.rb",
      "lib/guilded/exceptions.rb",
@@ -33,20 +47,6 @@ Gem::Specification.new do |s|
      "lib/guilded/rails/helpers.rb",
      "lib/guilded/rails/inactive_record/human_attribute_hint.rb",
      "lib/guilded/rails/view_helpers.rb",
-     "rails_generators/guilded_assets/guilded_assets_generator.rb",
-     "rails_generators/guilded_assets/templates/guilded.js",
-     "rails_generators/guilded_assets/templates/guilded.min.js",
-     "rails_generators/guilded_assets/templates/jquery-1.2.6.js",
-     "rails_generators/guilded_assets/templates/jquery-1.2.6.min.js",
-     "rails_generators/guilded_assets/templates/jquery-1.3.2.js",
-     "rails_generators/guilded_assets/templates/jquery-1.3.2.min.js",
-     "rails_generators/guilded_assets/templates/jquery-url.js",
-     "rails_generators/guilded_assets/templates/jquery-url.min.js",
-     "rails_generators/guilded_assets/templates/mootools-1.2.3.js",
-     "rails_generators/guilded_assets/templates/mootools-1.2.3.min.js",
-     "rails_generators/guilded_assets/templates/reset-min.css",
-     "rails_generators/guilded_config/guilded_config_generator.rb",
-     "rails_generators/guilded_config/templates/load_guilded_settings.rb",
      "script/console",
      "script/destroy",
      "script/generate",

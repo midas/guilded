@@ -1,3 +1,8 @@
+= 1.0.6 2010-02-18
+
+* Added Rails 3 compliant generators.
+
+
 = 1.0.5 2010-01-21
 
 * Gave css inclusion a :position option allowing for positioning before or after the component(s) css.
