@@ -2,35 +2,33 @@ module Guilded
   module Rails
     module ViewHelpers
 
-      # Generates the JavaScript includes for each Guilded element that is used.  Also
-      # generates the initGuildedElements function and includes a call to each GUIlded
-      # elements Init method.
+      # Generates the initGuildedElements function and includes a call to each GUIlded
+      # element(s) Init method.
       #
       # Must be called once per rendered page.  You can include it just before the closing body 
       # tag of your application layout.  If no Guilded elements were called in the template, the 
       # call to g_apply_behavior will not output anything.
       #
       def g_apply_behavior
+        Guilded::Guilder.instance.generate_javascript_init
+      end
+      
+      # Generates the JavaScript include(s) for each Guilded element that is used.
+      #
+      # Must be called once per rendered page.  You can include it just before the closing body 
+      # tag of your application layout.  If no Guilded elements were called in the template, the 
+      # call to g_apply_includes will not output anything.
+      #
+      def g_apply_includes
         g = Guilded::Guilder.instance
         g.generate_asset_lists
         self.output_buffer.sub!( /<!-- guilded.styles -->/, stylesheet_link_tag( g.combined_css_srcs, :cache => "cache/#{g.css_cache_name}" ) )
-        html = javascript_include_tag( g.combined_js_srcs, :cache => "cache/#{g.js_cache_name}" )
-        html << g.generate_javascript_init
-        html
+        javascript_include_tag( g.combined_js_srcs, :cache => "cache/#{g.js_cache_name}" )
       end
       
       def g_apply_style
         "<!-- guilded.styles -->"
       end
-      
-      # Generates the base javascript includes, if they have not alreay been included.
-      #
-      # def g_includes
-      #   return "" if @base_included
-      #   @base_included = true
-      #   javascript_include_tag( 'jquery/jquery-1.2.6.min.js' ) +
-      #     "<script type=\"text/javascript\">$j = jQuery.noConflict(); g={};</script>"
-      # end
 
       # Creates a javascript include tag for a Guilded specific file.  The only difference
       # being that it adds the file to a sources array to be concatenated and included at the 

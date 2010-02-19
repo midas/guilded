@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{guilded}
-  s.version = "1.0.6"
+  s.version = "1.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["C. Jason Harrelson (midas)"]
-  s.date = %q{2010-02-18}
+  s.date = %q{2010-02-19}
   s.description = %q{Guilded intends to provide a toolset for creating and consuming reusable web components.  Currently, this problem domain is filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade gracefully and are not accessible (in most cases).  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability and accessibility.  Guilded will achieve these goals by applying each technology at our disposal (HTML, CSS and JavaScript) to do as it was intended.}
   s.email = %q{jason@lookforwardenterprises.com}
   s.extra_rdoc_files = [
@@ -50,13 +50,14 @@ Gem::Specification.new do |s|
      "script/console",
      "script/destroy",
      "script/generate",
+     "spec/guilded/component_def_spec.rb",
+     "spec/guilded/guilder_spec.rb",
+     "spec/guilded_spec.rb",
+     "spec/spec.opts",
+     "spec/spec_helper.rb",
      "tasks/rails.rake",
      "tasks/rspec.rake",
-     "test/guilded/component_def_test.rb",
-     "test/guilded/guilder_test.rb",
      "test/guilded/rails/helpers_test.rb",
-     "test/guilded/rails/view_helpers_test.rb",
-     "test/guilded_test.rb",
      "test/test_helper.rb"
   ]
   s.homepage = %q{http://github.com/midas/guilded}
@@ -65,11 +66,11 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{A framework for building web based components centered around current web standards and best practices.}
   s.test_files = [
-    "test/guilded/component_def_test.rb",
-     "test/guilded/guilder_test.rb",
+    "spec/guilded/component_def_spec.rb",
+     "spec/guilded/guilder_spec.rb",
+     "spec/guilded_spec.rb",
+     "spec/spec_helper.rb",
      "test/guilded/rails/helpers_test.rb",
-     "test/guilded/rails/view_helpers_test.rb",
-     "test/guilded_test.rb",
      "test/test_helper.rb"
   ]
 

@@ -1,3 +1,8 @@
+= 1.0.7 2010-02-19
+
+* Updated view helpers and Guilder to adapt to usage in Rails 3.
+
+
 = 1.0.6 2010-02-18
 
 * Added Rails 3 compliant generators.

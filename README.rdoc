@@ -10,7 +10,7 @@ framework is written in ruby, but could be ported to other languages.
 
 Guilded intends to provide a toolset for creating and consuming reusable web components.  Currently, this problem domain is
 filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade gracefully and 
-are not accessible.  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability 
+are not accessible.  Guilded seeks to provide the same level of componentization and ease of use without sacrificing degradability 
 and accessibility.  Guilded will achieve these goals by applying each technology at our disposal (HTML, CSS and JavaScript) to do 
 as it was intended. 
 
@@ -21,7 +21,7 @@ enabled in their browser, but will still be able to use the component when CSS a
 Guilded will use jQuery as it's base JavaScript framework.  jQuery was chosen because it lends itself to progressive enhancement
 due to the way it was authored.  In addition, the tight integration of jQuery's selectors with CSS selectors is also highly 
 desirable.  When authoring a Guilded component, it is encouraged to write the behavior code as a jQuery plugin.  This will 
-allow the jQuery plugin to be used outside of the Guilded project, if desired.
+allow the jQuery or MooTools plugin to be used outside of the Guilded project, if desired.
 
 Guilded also seeks to provide a standardized CSS framework for creating layouts that are reusable and predictable.
 
@@ -117,13 +117,13 @@ have decided to include support for it in Guilded as of release 0.3.0.
 
 == INSTALL FOR RAILS
 
-Add to environment file:
+Add to Gemfile file:
 
-  config.gem "guilded", :version => '1.0.5', :source => 'http://gemcutter.org'
+  gem 'guilded', '1.0.7'
 
 Run:
 
-  sudo rake:gems:install
+  bundle install
 	
 Generate:
 
@@ -140,14 +140,18 @@ the respective file(s).
 
 === COMPONENT FRAMEWORK
 
-You must make a call to the view helper to apply the CSS  It should be placed in your layout:
+You must make a call to the view helper to apply the CSS.  The raw method must be used with Rails 3 as the new default 
+escapes strings.  It should be placed in your layout:
 
-  <%= g_apply_style %>
+  <%= raw g_apply_style %>
 
-There is also a view helper to apply the JavaScript.  You can place this at the bottom of your layout(s) (so you
+There is also two view helpers to apply the JavaScript.  You can place this at the bottom of your layout(s) (so you
 do not have to include it in every template):
 
-  <%= g_apply_behavior %>
+  <%= raw g_apply_includes %>
+  <script type="text/javascript">
+    <%= raw g_apply_behavior %> 
+  </script>
 
 A before filter is automatically set up in your application controller to reset the Guilded singleton that manages 
 everything after each rendering.  The code looks like this:

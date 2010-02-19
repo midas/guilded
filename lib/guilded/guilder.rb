@@ -158,15 +158,14 @@ module Guilded
     # method will exceute on document load finish.
     #
     def generate_javascript_init #:nodoc:
-      code = "<script type=\"text/javascript\">"
-      code << "var initGuildedElements = function(){"
+      code = "var initGuildedElements = function(){"
       @g_data_elements.each do |name, data|
         code << "g.#{name} = #{data.to_json};" 
       end
       @g_elements.each_value do |guilded_def| 
         code << "g.#{guilded_def.kind.to_s.camelize( :lower )}Init(#{guilded_def.options.to_json});" unless guilded_def.exclude_js?
       end
-      code << "jQuery('body').trigger('guildedInitialized');};jQuery('document').ready(initGuildedElements);</script>"
+      code << "jQuery('body').trigger('guildedInitialized');};jQuery('document').ready(initGuildedElements);"
     end
     
     # Generates a name to use when caching the current set of Guilded component JavaScript assets.  Sorts and concatenates
