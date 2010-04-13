@@ -72,7 +72,7 @@ require 'guilded/rails/inactive_record/human_attribute_hint'
 #   <%= g_load_alerter :skin => 'blueish', :id => 'load_alerter' %>
 #
 module Guilded
-  VERSION = '1.0.7'
+  VERSION = '1.0.8'
 end
 
 ActionView::Base.send( :include, Guilded::Rails::ViewHelpers ) if defined?( ActionView )

@@ -1,3 +1,8 @@
+= 1.0.8 2010-04-12
+
+* Removed the human attribute override in favor of using the Rails I18n implmentation.
+
+
 = 1.0.7 2010-02-19
 
 * Updated view helpers and Guilder to adapt to usage in Rails 3.
