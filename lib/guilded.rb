@@ -8,7 +8,6 @@ require 'guilded/rails/controller_actions'
 require 'guilded/rails/helpers'
 require 'guilded/rails/view_helpers'
 require 'guilded/rails/active_record/human_attribute_hint'
-require 'guilded/rails/active_record/human_attribute_override'
 require 'guilded/rails/inactive_record/human_attribute_hint'
 
 # Guilded is a framework for creating reusable UI components for web applications.  Guilded provides the facilities to 
