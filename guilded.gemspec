@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{guilded}
-  s.version = "1.0.7"
+  s.version = "1.0.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["C. Jason Harrelson (midas)"]
-  s.date = %q{2010-02-19}
+  s.date = %q{2010-04-12}
   s.description = %q{Guilded intends to provide a toolset for creating and consuming reusable web components.  Currently, this problem domain is filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade gracefully and are not accessible (in most cases).  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability and accessibility.  Guilded will achieve these goals by applying each technology at our disposal (HTML, CSS and JavaScript) to do as it was intended.}
   s.email = %q{jason@lookforwardenterprises.com}
   s.extra_rdoc_files = [
@@ -28,7 +28,6 @@ Gem::Specification.new do |s|
      "lib/guilded/guilder.rb",
      "lib/guilded/rails.rb",
      "lib/guilded/rails/active_record/human_attribute_hint.rb",
-     "lib/guilded/rails/active_record/human_attribute_override.rb",
      "lib/guilded/rails/controller_actions.rb",
      "lib/guilded/rails/helpers.rb",
      "lib/guilded/rails/inactive_record/human_attribute_hint.rb",
@@ -63,7 +62,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/midas/guilded}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{A framework for building web based components centered around current web standards and best practices.}
   s.test_files = [
     "spec/guilded/component_def_spec.rb",
