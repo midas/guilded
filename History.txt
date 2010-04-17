@@ -1,6 +1,11 @@
-= 1.0.8 2010-04-12
+= 1.0.8 2010-04-16
 
-* Removed the human attribute override in favor of using the Rails I18n implmentation.
+* Updated the Rails Guilded initializer to get rid of deprecated RAILS_ROOT in favor of Rails.root.
+
+
+= 1.0.8 2010-03-12
+
+* Removed the human attribute override in favor of using the Rails I18n implementation.
 
 
 = 1.0.7 2010-02-19
