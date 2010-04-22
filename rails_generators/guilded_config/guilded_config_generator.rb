@@ -5,7 +5,7 @@ class GuildedConfigGenerator < Rails::Generator::Base
 
   def manifest
     record do |m|
-      m.file 'load_guilded_settings.rb', 'config/initializers/load_guilded_settings.rb' 
+      m.file 'guilded_config.rb', 'config/initializers/guilded_config.rb' 
     end
   end
 end

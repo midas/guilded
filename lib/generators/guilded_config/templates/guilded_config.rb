@@ -1,24 +1,6 @@
-$LOAD_PATH.unshift( File.dirname(__FILE__) )
-$LOAD_PATH.unshift( File.join( File.dirname(__FILE__), '..', 'lib' ) )
-require 'rubygems'
-require 'guilded'
-require 'spec'
-require 'spec/autorun'
-
-Spec::Runner.configure do |config|
-  
-end
-
-module Rails
-  def self.env
-    'development'
-  end
-  
-  def self.root
-    ''
-  end
-end
-
+# While Guilded is framework agnostic, this config file is Rails specific.  You can create your own config file based
+# on this one in order to work in different environments.
+#
 GUILDED_CONFIG = {
   :app_root => Rails.root.to_s,
   :js_path => "#{Rails.root}/public/javascripts/",

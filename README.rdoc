@@ -82,6 +82,14 @@ have decided to include support for it in Guilded as of release 0.3.0.
 * Extends InactiveRecord (http://github.com/midas/inactive_record/tree/master) to include the attr_human_hint method.
 
 
+== COMPATABILITY:
+
+* Ruby 1.9
+* Ruby 1.8
+* Rails 3
+* Rails 2
+
+
 == GUILDED COMPONENT PROJECTS
 
 * http://github.com/midas/g_already_grid/tree/master
@@ -93,10 +101,6 @@ have decided to include support for it in Guilded as of release 0.3.0.
 * http://github.com/midas/g_nested_select/tree/master
 * http://github.com/midas/g_sectioned_shower/tree/master
 * http://github.com/midas/g_toggle_block/tree/master
-
-
-== PROBLEMS
-
 
 
 == REQUIREMENTS
@@ -117,18 +121,24 @@ have decided to include support for it in Guilded as of release 0.3.0.
 
 == INSTALL FOR RAILS
 
-Add to Gemfile file:
+Configure the Gem for use:
 
-  gem 'guilded', '1.0.7'
+  gem 'guilded', '1.0.7'                       # Rails 3
+  config.gem 'guilded', :version => '1.0.7'    # Rails 2
 
-Run:
+Install the Gem:
 
-  bundle install
+  bundle install         # Rails 3
+  rake gems:install      # Rails 2
+  gem install guilded    # Manual
 	
 Generate:
 
-  script/generate guilded_config
-  script/generate guilded_assets
+  rails generate guilded_config     # Rails 3
+  rails generate guilded_assets     # Rails 3
+
+  script/generate guilded_config    # Rails 2
+  script/generate guilded_assets    # Rails 2
 
 
 Edit the settings file at config/initializers/load_guilded_settings.rb.  Change any of these settings to reflect how
@@ -143,14 +153,22 @@ the respective file(s).
 You must make a call to the view helper to apply the CSS.  The raw method must be used with Rails 3 as the new default 
 escapes strings.  It should be placed in your layout:
 
-  <%= raw g_apply_style %>
+  <%= raw g_apply_style %>    # Rails 3
+  <%= g_apply_style %>    # Rails 2
 
 There is also two view helpers to apply the JavaScript.  You can place this at the bottom of your layout(s) (so you
 do not have to include it in every template):
 
+  # Rails 3
   <%= raw g_apply_includes %>
   <script type="text/javascript">
     <%= raw g_apply_behavior %> 
+  </script>
+
+  # Rails 2
+  <%= g_apply_includes %>
+  <script type="text/javascript">
+    <%= g_apply_behavior %> 
   </script>
 
 A before filter is automatically set up in your application controller to reset the Guilded singleton that manages 
