@@ -1,3 +1,4 @@
 .* # Ignore all dotfiles...
 !.gitignore # except for .gitignore
 pkg/*
+.rake_tasks~

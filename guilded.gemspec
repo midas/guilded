@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{guilded}
-  s.version = "1.0.9"
+  s.version = "1.0.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["C. Jason Harrelson (midas)"]
-  s.date = %q{2010-04-16}
+  s.date = %q{2010-04-22}
   s.description = %q{Guilded intends to provide a toolset for creating and consuming reusable web components.  Currently, this problem domain is filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade gracefully and are not accessible (in most cases).  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability and accessibility.  Guilded will achieve these goals by applying each technology at our disposal (HTML, CSS and JavaScript) to do as it was intended.}
   s.email = %q{jason@lookforwardenterprises.com}
   s.extra_rdoc_files = [
@@ -22,6 +22,20 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "guilded.gemspec",
+     "lib/generators/guilded_assets/guilded_assets_generator.rb",
+     "lib/generators/guilded_assets/templates/guilded.js",
+     "lib/generators/guilded_assets/templates/guilded.min.js",
+     "lib/generators/guilded_assets/templates/jquery-1.2.6.js",
+     "lib/generators/guilded_assets/templates/jquery-1.2.6.min.js",
+     "lib/generators/guilded_assets/templates/jquery-1.3.2.js",
+     "lib/generators/guilded_assets/templates/jquery-1.3.2.min.js",
+     "lib/generators/guilded_assets/templates/jquery-url.js",
+     "lib/generators/guilded_assets/templates/jquery-url.min.js",
+     "lib/generators/guilded_assets/templates/mootools-1.2.3.js",
+     "lib/generators/guilded_assets/templates/mootools-1.2.3.min.js",
+     "lib/generators/guilded_assets/templates/reset-min.css",
+     "lib/generators/guilded_config/guilded_config_generator.rb",
+     "lib/generators/guilded_config/templates/guilded_config.rb",
      "lib/guilded.rb",
      "lib/guilded/component_def.rb",
      "lib/guilded/exceptions.rb",
@@ -45,10 +59,12 @@ Gem::Specification.new do |s|
      "rails_generators/guilded_assets/templates/mootools-1.2.3.min.js",
      "rails_generators/guilded_assets/templates/reset-min.css",
      "rails_generators/guilded_config/guilded_config_generator.rb",
-     "rails_generators/guilded_config/templates/load_guilded_settings.rb",
+     "rails_generators/guilded_config/templates/guilded_config.rb",
      "script/console",
      "script/destroy",
      "script/generate",
+     "spec/generators/guilded_assets_generator_spec.rb",
+     "spec/generators/guilded_config_generator_spec.rb",
      "spec/guilded/component_def_spec.rb",
      "spec/guilded/guilder_spec.rb",
      "spec/guilded_spec.rb",
@@ -65,7 +81,9 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{A framework for building web based components centered around current web standards and best practices.}
   s.test_files = [
-    "spec/guilded/component_def_spec.rb",
+    "spec/generators/guilded_assets_generator_spec.rb",
+     "spec/generators/guilded_config_generator_spec.rb",
+     "spec/guilded/component_def_spec.rb",
      "spec/guilded/guilder_spec.rb",
      "spec/guilded_spec.rb",
      "spec/spec_helper.rb",
@@ -79,13 +97,16 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<shoulda>, [">= 2.10.2"])
+      s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_runtime_dependency(%q<activesupport>, [">= 2.0.2"])
     else
       s.add_dependency(%q<shoulda>, [">= 2.10.2"])
+      s.add_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_dependency(%q<activesupport>, [">= 2.0.2"])
     end
   else
     s.add_dependency(%q<shoulda>, [">= 2.10.2"])
+    s.add_dependency(%q<rspec>, [">= 1.2.9"])
     s.add_dependency(%q<activesupport>, [">= 2.0.2"])
   end
 end
