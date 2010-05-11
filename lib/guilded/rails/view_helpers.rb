@@ -9,7 +9,7 @@ module Guilded
       # tag of your application layout.  If no Guilded elements were called in the template, the 
       # call to g_apply_behavior will not output anything.
       #
-      def g_apply_behavior
+      def g_apply_behavior        
         Guilded::Guilder.instance.generate_javascript_init
       end
       
@@ -22,9 +22,6 @@ module Guilded
       def g_apply_includes
         g = Guilded::Guilder.instance
         g.generate_asset_lists
-        
-        # CSS
-        self.output_buffer.sub!( /<!-- guilded.styles -->/, stylesheet_link_tag( g.combined_css_srcs, :cache => "cache/#{g.css_cache_name}" ) )
 
         # JavaScript
         if g.production? && g.use_remote_jquery
@@ -39,6 +36,14 @@ module Guilded
       
       def g_apply_style
         "<!-- guilded.styles -->"
+      end
+      
+      # Injects the CSS into the header.  Must be called once per rendered page and within a scope that allows access 
+      # to the output buffer of the tempalte system being used.
+      #
+      def g_inject_styles
+        g = Guilded::Guilder.instance
+        self.output_buffer.sub!( /<!-- guilded.styles -->/, stylesheet_link_tag( g.combined_css_srcs, :cache => "cache/#{g.css_cache_name}" ) )
       end
 
       # Creates a javascript include tag for a Guilded specific file.  The only difference
