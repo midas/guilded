@@ -1,3 +1,13 @@
+= 1.0.12 2010-05-11
+
+* Fixed a new compatibility issue with Rails 3 templating.
+
+
+= 1.0.11 2010-05-11
+
+* Yanked (cancelled)
+
+
 = 1.0.10 2010-04-22
 
 * Added option to allow for serving jQuery lib from a remote asset server (ie. Google).

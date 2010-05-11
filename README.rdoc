@@ -82,7 +82,7 @@ have decided to include support for it in Guilded as of release 0.3.0.
 * Extends InactiveRecord (http://github.com/midas/inactive_record/tree/master) to include the attr_human_hint method.
 
 
-== COMPATABILITY:
+== COMPATABILITY
 
 * Ruby 1.9
 * Ruby 1.8
@@ -164,12 +164,14 @@ do not have to include it in every template):
   <script type="text/javascript">
     <%= raw g_apply_behavior %> 
   </script>
+	<% g_inject_styles %>
 
   # Rails 2
   <%= g_apply_includes %>
   <script type="text/javascript">
     <%= g_apply_behavior %> 
   </script>
+	<% g_inject_styles %>
 
 A before filter is automatically set up in your application controller to reset the Guilded singleton that manages 
 everything after each rendering.  The code looks like this:
