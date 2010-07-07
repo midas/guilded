@@ -190,6 +190,22 @@ jQuery.url = function()
 			return ( segments[pos] === "" || segments[pos] === undefined ) ? null : segments[pos];
 		},
 		
+		replaceParams : function( newParams )
+		{
+			setUp();
+			var newUrl = key('protocol') + '://' + key('host');
+			if( key('port') ) newUrl += ':' + key('port'); 
+			newUrl += key('path');
+			
+			var paramStr = '?';
+			for( param in newParams )
+			{
+				paramStr += param + '=' + newParams[param] + '&';
+			}
+			
+			return newUrl + paramStr;
+		},
+		
 		attr : key, // provides public access to private 'key' function - see above
 		
 		param : param // provides public access to private 'param' function - see above

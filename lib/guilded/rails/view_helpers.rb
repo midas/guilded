@@ -103,6 +103,14 @@ module Guilded
         sources.each { |src| Guilded::Guilder.instance.add_css_source( src, options[:position] ) }
         ''
       end
+      
+      # Outputs a conditional ie stylesheet link tag
+      #
+      def g_ie_stylesheet_link_tag( *args )
+        options = {:version => 6}
+        options.merge!( args.extract_options! )
+        output = "<!--[if lte IE #{options[:version]}]>\n  #{stylesheet_link_tag( args )}\n<![endif]-->"
+      end
 
       def g_skin_tag( source, skin='default' )
         path = "#{RAILS_ROOT}/public/stylesheets/#{GUILDED_JS_FOLDER}#{GUILDED_NS}#{source.to_s}/#{skin}.css"
