@@ -1,3 +1,8 @@
+= 1.0.13 2010-08-04
+
+* Provide option to include script tags in the g_apply_behavior method.
+
+
 = 1.0.12 2010-05-11
 
 * Fixed a new compatibility issue with Rails 3 templating.
@@ -77,7 +82,7 @@
 
 = 0.2.8 2009-06-12
 
-* Removed some code from the InactiveRecord:Base extension for human attrbiute hint that returns unless 
+* Removed some code from the InactiveRecord:Base extension for human attrbiute hint that returns unless
   table_exists? as this does not make any sense for InactiveRecord.
 
 
@@ -98,9 +103,9 @@
 
 = 0.2.4 2009-05-29
 
-* Added add_data method to the Guilder object allowing named data structures to be passed to the JavaScript 
+* Added add_data method to the Guilder object allowing named data structures to be passed to the JavaScript
   executing environment.
-* Added a jQuery event to the body DOM element called guildedInitialized.  To execute JavaScript code after all 
+* Added a jQuery event to the body DOM element called guildedInitialized.  To execute JavaScript code after all
   Guilded components are intialized, simply bind to this event.
 
 
