@@ -8,7 +8,7 @@ begin
     gem.summary = %Q{A framework for building web based components centered around current web standards and best practices.}
     gem.description = %Q{Guilded intends to provide a toolset for creating and consuming reusable web components.  Currently, this problem domain is filled with JavaScript frameworks.  These frameworks are wonderful and work very well.   However, they do not degrade gracefully and are not accessible (in most cases).  Guilded seeks to provide the same level of "componentization" and ease of use without sacrificing degradability and accessibility.  Guilded will achieve these goals by applying each technology at our disposal (HTML, CSS and JavaScript) to do as it was intended.}
     gem.email = "jason@lookforwardenterprises.com"
-    gem.homepage = "http://github.com/midas/guilded"
+    gem.homepage = "http://github.com/guilded/guilded"
     gem.authors = ["C. Jason Harrelson (midas)"]
     gem.add_development_dependency "shoulda", ">= 2.10.2"
     gem.add_development_dependency "rspec", ">= 1.2.9"
