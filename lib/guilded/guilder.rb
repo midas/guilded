@@ -170,6 +170,8 @@ module Guilded
         code << "g.#{name} = #{data.to_json};"
       end
       @g_elements.each_value do |guilded_def|
+        include_path_helpers = guilded_def.options.delete( :include_path_helpers_in_init_options )
+        guilded_def.options.delete( :path_helpers ) unless include_path_helpers
         code << "g.#{guilded_def.kind.to_s.camelize( :lower )}Init(#{guilded_def.options.to_json});" unless guilded_def.exclude_js?
       end
       code << "jQuery('body').trigger('guildedInitialized');};jQuery('document').ready(initGuildedElements);"
