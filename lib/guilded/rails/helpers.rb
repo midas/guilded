@@ -1,18 +1,20 @@
 module Guilded
   module Rails
-    
+
     require 'active_support'
     #require 'rubygems'
     #gem 'activesupport', '2.3.2'
-    
+
     # Common functionality that Rails Guilded components may need to use.
     #
     class Helpers
-      
+
       # Resolves the REST path helper names and arguments from a ActiveRecord object(s).
       #
-      def self.resolve_rest_path_helpers( ar_obj_col_or_class, options={} )        
-        if ar_obj_col_or_class.is_a?( Array )
+      def self.resolve_rest_path_helpers( ar_obj_col_or_class, options={} )
+        if ar_obj_col_or_class.is_a?( ActiveRecord::Relation )
+          ar_obj = ar_obj_col_or_class.first
+        elsif ar_obj_col_or_class.is_a?( Array )
           ar_obj = ar_obj_col_or_class[0]
         elsif ar_obj_col_or_class.is_a?( ActiveRecord::Base )
           ar_obj = ar_obj_col_or_class
@@ -21,7 +23,7 @@ module Guilded
         else
           ar_obj = ar_obj_col_or_class
         end
-        
+
         plural_ar_type = ar_obj.class.to_s.tableize
         singular_ar_type = plural_ar_type.singularize
         polymorphic_as = options[:polymorphic_as]
@@ -35,12 +37,12 @@ module Guilded
         scoped_by = Array.new
         shallow_scoped_by = Array.new
         helpers = Hash.new
-        
+
         if options[:namespace]
           pre << "#{options[:namespace].to_s}_"
-          shallow_pre << "#{options[:namespace].to_s}_" 
+          shallow_pre << "#{options[:namespace].to_s}_"
         end
-        
+
         if options[:scoped_by]
           scoped_by = options[:scoped_by].is_a?( Array ) ? options[:scoped_by] : Array.new << options[:scoped_by]
           scoped_by.each_with_index do |scoper, i|
@@ -51,7 +53,7 @@ module Guilded
           shallow_scoped_by = scoped_by.clone
           shallow_scoped_by.pop if options[:shallow]
         end
-        
+
         helpers[:index_rest_helper] = "#{pre}#{plural_derived_type}_path"
         helpers[:index_rest_args] = scoped_by
         helpers[:show_rest_helper] = "#{shallow_pre}#{singular_derived_type}_path"
@@ -62,10 +64,10 @@ module Guilded
         helpers[:edit_rest_args] = shallow_scoped_by
         helpers[:delete_rest_helper] = "delete_#{shallow_pre}#{singular_derived_type}_path"
         helpers[:delete_rest_args] = shallow_scoped_by
-        
+
         return helpers
       end
-      
+
       # Helper method that generates a path from an item.  If item is :home then this method
       # will call the home_path method to generate a link
       #
@@ -116,8 +118,8 @@ module Guilded
 
         return methods, titles
       end
-      
+
     end
-    
+
   end
 end
