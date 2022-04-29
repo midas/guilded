@@ -5,18 +5,18 @@ module Guilded
       # Generates the initGuildedElements function and includes a call to each GUIlded
       # element(s) Init method.
       #
-      # Must be called once per rendered page.  You can include it just before the closing body 
-      # tag of your application layout.  If no Guilded elements were called in the template, the 
+      # Must be called once per rendered page.  You can include it just before the closing body
+      # tag of your application layout.  If no Guilded elements were called in the template, the
       # call to g_apply_behavior will not output anything.
       #
-      def g_apply_behavior        
-        Guilded::Guilder.instance.generate_javascript_init
+      def g_apply_behavior( options={} )
+        Guilded::Guilder.instance.generate_javascript_init( options )
       end
-      
+
       # Generates the JavaScript include(s) for each Guilded element that is used.
       #
-      # Must be called once per rendered page.  You can include it just before the closing body 
-      # tag of your application layout.  If no Guilded elements were called in the template, the 
+      # Must be called once per rendered page.  You can include it just before the closing body
+      # tag of your application layout.  If no Guilded elements were called in the template, the
       # call to g_apply_includes will not output anything.
       #
       def g_apply_includes
@@ -33,12 +33,12 @@ module Guilded
         end
         output
       end
-      
+
       def g_apply_style
         "<!-- guilded.styles -->"
       end
-      
-      # Injects the CSS into the header.  Must be called once per rendered page and within a scope that allows access 
+
+      # Injects the CSS into the header.  Must be called once per rendered page and within a scope that allows access
       # to the output buffer of the tempalte system being used.
       #
       def g_inject_styles
@@ -47,12 +47,12 @@ module Guilded
       end
 
       # Creates a javascript include tag for a Guilded specific file.  The only difference
-      # being that it adds the file to a sources array to be concatenated and included at the 
+      # being that it adds the file to a sources array to be concatenated and included at the
       # end of the page with the dependencies specified for the Guilded components used.
       #
       # To explicitly include the jQuery or MooTools libraries you can use :jquery and/or :mootools
       # respectively.  If a component that uses either jQuery or MooTools is used on a page, there is
-      # no need to explicitly include the library, as it will be resolved as a dependency and only 
+      # no need to explicitly include the library, as it will be resolved as a dependency and only
       # included once.
       #
       def g_javascript_include_tag( *sources )
@@ -82,19 +82,19 @@ module Guilded
         ''
       end
 
-      # Replaces the Rails stylesheet_link_tag helper if you wnat Guilded to manage CSS for you.  
+      # Replaces the Rails stylesheet_link_tag helper if you wnat Guilded to manage CSS for you.
       # Although the syntax is exactly the same, the method works a little differently.
-      # 
-      # This helper adds the stylesheet(s) to a collection to be renderred out together 
-      # with all the guilded componenets stylesheets.  This allows the stylesheets passed 
+      #
+      # This helper adds the stylesheet(s) to a collection to be renderred out together
+      # with all the guilded componenets stylesheets.  This allows the stylesheets passed
       # to this method to be cached with the guilded stylesheests into a single reusable file.
-      # 
+      #
       # The helper will ensure that these stylesheets are included after Guilded's reset
-      # stylesheet and before guilded's component's stylesheets so that they can override any 
+      # stylesheet and before guilded's component's stylesheets so that they can override any
       # resets, etc and not override any guilded components styles.
-      
+
       # *options*
-      # :position The place to position the css. pre for before the component's css or post for after. 
+      # :position The place to position the css. pre for before the component's css or post for after.
       #    Defaults to post.
       #
       def g_stylesheet_link_tag( *sources )
@@ -112,7 +112,7 @@ module Guilded
           ""
         end
       end
-      
+
     end
   end
 end
